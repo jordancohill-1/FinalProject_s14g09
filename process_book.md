@@ -7,11 +7,11 @@
 Most of the work was cut out for me with the [provided repo](https://github.com/sundeepblue/movie_rating_prediction)
 for the project but there were a few roadblocks along the way.
 
-I installed Anaconda to make it easier to deal with Scrapy's dependencies. I came 
-across a syntax error having to do with the print function while attempting to run
-the scraper and found that the scraper is written in Python 2.7. As a result, I
-switched the Anaconda environment to Python 2.7 and installed the necessary
-depedencies.
+I installed Anaconda to make it easier to deal with Scrapy's dependencies. After
+isntalling dependendies, I came across a syntax error having to do with the 
+`print` function while attempting to run the scraper. I figured out that the
+scraper was written in Python 2.7. As a result, I switched the Anaconda
+environment to Python 2.7 and installed the necessary depedencies once more.
 
 After attempting to run the script again, I found that Scrapy wasn't detecting
 the `movie.settings` module. The [solution](https://stackoverflow.com/a/24576949) 
