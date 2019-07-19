@@ -42,3 +42,40 @@ created using the 4 dominant colors of each poster.
 Next, I plan to extract the dominant colors from the quantized images so that we can make 
 predictions on what colors lead to better ratings/or sales.
 
+
+### Facial Recognition (Phillip Tran)
+
+#### Nconst Scraping
+
+Using a simple Node script I was able to extract the `nconst` identifiers of the
+top 1000 actors on IMDB. This ensures that we have the most relevant set of
+actors to identify trends with.
+
+#### DB Actor Filtering
+
+The next step is to associated these identifiers with the actors.
+
+I imported IMDB's entire [database](https://datasets.imdbws.com/) of actors.
+Then, I used a Python script in order to filter the top 1000 actors in the `nconst.json` file I generated using the `nconst_scraper`.
+
+#### Image Scraping
+
+The actor images are needed as part of the facial recognition dataset. Currently
+a WIP.
+
+I need to brush up on async/await so my Node script scrapes the images correctly. It works with 10 to 15 at a time but tends to bug out when it has to more images
+at a time due to the way Javascript works.
+
+#### Face Recognition
+
+I found the [face_recognition](https://github.com/ageitgey/face_recognition) 
+library to be an accurate Python library for facial recognition. It works quite
+well with eyewear and partially obscured faces.
+
+Although I can run it fine through the CLI, I'm still working on a script
+implementation. [Adrian Rosebrock's article](https://www.pyimagesearch.com/2018/06/18/face-recognition-with-opencv-python-and-deep-learning/)
+seems to be a pretty good jumping off point.
+
+I already got the actor image encoding and face recognition to work. The last
+order of business is to add the actors that appear in each poster to its
+associated database entry.
