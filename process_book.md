@@ -28,3 +28,17 @@ directory, I was able to run the script and scrape ~5000 images totaling
 1.4GB.
 
 These images will be used to train and test our model.
+
+### Quantization (Jordan Cohill)
+
+With the help of OpenCV and a script example from 
+https://www.pyimagesearch.com/2014/07/07/color-quantization-opencv-using-k-means-clustering/ 
+I was able to generate quantized images for all the given movie posters.
+
+The original images were stored locally and the script I wrote looped thru the directory
+of the images and generated a quantized image for each file. The quantized images were 
+created using the 4 dominant colors of each poster.
+
+Next, I plan to extract the dominant colors from the quantized images so that we can make 
+predictions on what colors lead to better ratings/or sales.
+
