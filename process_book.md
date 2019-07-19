@@ -53,10 +53,11 @@ actors to identify trends with.
 
 #### DB Actor Filtering
 
-The next step is to associated these identifiers with the actors.
+The next step is to associate these identifiers with the actors.
 
 I imported IMDB's entire [database](https://datasets.imdbws.com/) of actors.
-Then, I used a Python script in order to filter the top 1000 actors in the `nconst.json` file I generated using the `nconst_scraper`.
+Then, I used a Python script in order to filter the top 1000 actors in the `nconst.json` file I generated using the `nconst_scraper` and spit them out
+into a file called `top_1000_actors.csv`.
 
 #### Image Scraping
 
@@ -67,6 +68,8 @@ I need to brush up on async/await so my Node script scrapes the images correctly
 at a time due to the way Javascript works.
 
 #### Face Recognition
+
+Also a WIP.
 
 I found the [face_recognition](https://github.com/ageitgey/face_recognition) 
 library to be an accurate Python library for facial recognition. It works quite
