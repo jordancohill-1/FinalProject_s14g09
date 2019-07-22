@@ -10,10 +10,10 @@ import cv2
 import os
 import glob
 
-x=0
-directory = glob.glob("/Users/jordancohill/Desktop/WebApps/final/full/*.jpg")
-for file in directory:
 
+directory = glob.iglob("/Users/jordancohill/Desktop/WebApps/Final_data/full/*.jpg")
+for file in directory:
+    filename = os.path.basename(file)
 
 # load the image and grab its width and height
     image = cv2.imread(str(file))
@@ -38,16 +38,15 @@ for file in directory:
 
     # reshape the feature vectors to images
     quant = quant.reshape((h, w, 3))
-    image = image.reshape((h, w, 3))
 
     # convert from L*a*b* to RGB
     quant = cv2.cvtColor(quant, cv2.COLOR_LAB2BGR)
-    image = cv2.cvtColor(image, cv2.COLOR_LAB2BGR)
+
 
     # display the images and wait for a keypress
     #cv2.imshow("image", np.hstack([quant]))
-    x = x + 1
+
     path = "/Users/jordancohill/Desktop/Quant/results"
-    cv2.imwrite(os.path.join(path , "image" + str(x) + ".jpg"), quant)
+    cv2.imwrite(os.path.join(path , filename), quant)
 
     #cv2.waitKey(0)

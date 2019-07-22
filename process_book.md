@@ -82,3 +82,17 @@ seems to be a pretty good jumping off point.
 I already got the actor image encoding and face recognition to work. The last
 order of business is to add the actors that appear in each poster to its
 associated database entry.
+
+### Dominant Colors (Jordan Cohill)
+Using the results of the quantized images, the dominant color of each image was
+evaluated using the ColorThief library , which returns an RGB value for each image.
+Next, the RGB value was evaluated using the WebColors library and some additional 
+script to determine the closest associated color name.
+
+The images filename, RGB value and Color name were stored in an np.array and 
+written to a csv.
+
+The Next step will be to group the colors at a higher level(primary colors) and compare 
+those colors with movie ratings to show which dominant color leads to better movie ratings
+
+
