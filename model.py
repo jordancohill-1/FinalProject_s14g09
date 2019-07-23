@@ -13,6 +13,7 @@ class Movie(db.Model):
     second_actor = db.Column(db.String(64), nullable=False)
     third_actor = db.Column(db.String(64), nullable=False)
     poster_faces = db.Column(db.Integer, nullable=False)
+    dominant_color_rgb = db.Column(db.String(64), nullable=False)
+    dominant_color_name = db.Column(d.String(64), nullable=False)
     link = db.Column(db.String(64), nullable=False)
     imdb_score = db.Column(db.Float, nullable=False)
-
