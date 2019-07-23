@@ -85,7 +85,7 @@ associated database entry.
 
 ### Dominant Colors (Jordan Cohill)
 Using the results of the quantized images, the dominant color of each image was
-evaluated using the ColorThief library , which returns an RGB value for each image.
+evaluated using the ColorThief library, which returns an RGB value for each image.
 Next, the RGB value was evaluated using the WebColors library and some additional 
 script to determine the closest associated color name.
 
@@ -95,4 +95,24 @@ written to a csv.
 The Next step will be to group the colors at a higher level(primary colors) and compare 
 those colors with movie ratings to show which dominant color leads to better movie ratings
 
+#### Color Categorization (Phillip Tran)
 
+I improved upon Jordan's work by modifying his color categorization function.
+Originally, the script assign the closest associated CSS3 color name to the
+dominant color. However, this would produce a list of approximately 140
+different colors. This would make it difficult to find broad trends in our data.
+
+The script now takes the CSS3 color name and recategorizes it based upon 11
+general colors:
+
+- Pink
+- Red
+- Orange
+- Yellow
+- Brown
+- Green
+- Blue
+- Purple
+- White
+- Gray
+- Black
