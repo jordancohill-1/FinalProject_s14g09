@@ -7,7 +7,7 @@
 #destination = "destination.csv"
 
 # Jordan's Machine
-source = "/Users/jordancohill/Desktop/Quant/results/*.jpg"
+source = "/Users/jordancohill/Desktop/Quant/results_fifty/*.jpg"
 destination = "/Users/jordancohill/Desktop/WebApps/final/dominantColors.csv"
 
 ################################################################################
