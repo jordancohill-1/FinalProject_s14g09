@@ -30,7 +30,7 @@ data = np.append(data, np.array([["filename", "RGB Value", "Color"]]), axis = 0)
 directory = glob.iglob(source)
 colorRange = json.load(open('colorRange.json'))
 
-for file in directory:    
+for file in directory:
     filename = os.path.basename(file)
     color_thief = ColorThief(file)
     
