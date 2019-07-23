@@ -98,7 +98,7 @@ those colors with movie ratings to show which dominant color leads to better mov
 #### Color Categorization (Phillip Tran)
 
 I improved upon Jordan's work by modifying his color categorization function.
-Originally, the script assign the closest associated CSS3 color name to the
+Originally, the script assigns the closest associated CSS3 color name to the
 dominant color. However, this would produce a list of approximately 140
 different colors. This would make it difficult to find broad trends in our data.
 
