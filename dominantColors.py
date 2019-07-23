@@ -1,22 +1,40 @@
+###########
+# OPTIONS #
+###########
+
+# Phillip's Machine
+#source = "results_small/*.jpg"
+#destination = "destination.csv"
+
+# Jordan's Machine
+source = "/Users/jordancohill/Desktop/Quant/results/*.jpg"
+destination = "/Users/jordancohill/Desktop/WebApps/final/dominantColors.csv"
+
+################################################################################
 
 from sklearn.cluster import MiniBatchKMeans, KMeans
 from pathlib import Path
 from colorthief import ColorThief
 import numpy as np
+import pandas as pd
 import os
 import glob
 import csv
+import json
 import io
 import ntpath
 import webcolors
 
 data = np.empty((0,3), str)
 data = np.append(data, np.array([["filename", "RGB Value", "Color"]]), axis = 0)
-directory = glob.iglob("/Users/jordancohill/Desktop/Quant/results/*.jpg")
-for file in directory:
+directory = glob.iglob(source)
+colorRange = json.load(open('colorRange.json'))
+
+for file in directory:    
     filename = os.path.basename(file)
     color_thief = ColorThief(file)
-     # get the dominant color
+    
+    # get the dominant color
     dominant_color = color_thief.get_color(quality=1)
 
     def closest_colour(dominant_color):
@@ -31,7 +49,8 @@ for file in directory:
 
     def get_colour_name(dominant_color):
         try:
-            closest_name = actual_name = webcolors.rgb_to_name(dominant_color)
+            actual_name = webcolors.rgb_to_name(dominant_color, spec='css3')
+            closest_name = None
         except ValueError:
             closest_name = closest_colour(dominant_color)
             actual_name = None
@@ -43,13 +62,16 @@ for file in directory:
         colorName = closest_name
     else:
         colorName = actual_name
+    
+    def get_general_name(colorName):
+        for item in colorRange:
+            if colorName in item["css3_colors"]:
+                general_name = item["parent_color"]
+                return general_name
+    
+    general_name = get_general_name(colorName)
 
-    data = np.append(data, np.array([[filename, str(dominant_color), colorName]]), axis = 0)
+    data = np.append(data, np.array([[filename, str(dominant_color), general_name]]),
+                     axis = 0)
 
-
-numpy.savetxt("/Users/jordancohill/Desktop/WebApps/final/dominantColors.csv", data, delimiter=",")
-
-
-
-
-
+pd.DataFrame(data).to_csv(destination)

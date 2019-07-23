@@ -1,0 +1,193 @@
+[
+  {
+    "parent_color": "pink",
+    "css3_colors": [
+      "deeppink",
+      "hotpink",
+      "lightpink",
+      "mediumvioletred",
+      "palevioletred",
+      "pink"
+    ]
+  },
+  {
+    "parent_color": "red",
+    "css3_colors": [
+      "crimson",
+      "darkred",
+      "darksalmon",
+      "firebrick",
+      "indianred",
+      "lightcoral",
+      "lightsalmon",
+      "red",
+      "salmon"
+    ]
+  },
+  {
+    "parent_color": "orange",
+    "css3_colors": [
+      "coral",
+      "darkorange",
+      "moccasin",
+      "orange",
+      "orangered",
+      "papayawhip",
+      "peachpuff",
+      "tomato"
+    ]
+  },
+  {
+    "parent_color": "yellow",
+    "css3_colors": [
+      "darkkhaki",
+      "khaki",
+      "gold",
+      "lemonchiffon",
+      "lightgoldenrodyellow",
+      "lightyellow",
+      "palegoldenrod",
+      "yellow"
+    ]
+  },
+  {
+    "parent_color": "brown",
+    "css3_colors": [
+      "bisque",
+      "blanchedalmond",
+      "brown",
+      "burlywood",
+      "chocolate",
+      "darkgoldenrod",
+      "goldenrod",
+      "maroon",
+      "peru",
+      "rosybrown",
+      "saddlebrown",
+      "sandybrown",
+      "sienna",
+      "tan",
+      "wheat"
+    ]
+  },
+  {
+    "parent_color": "green",
+    "css3_colors": [
+      "chartreuse",
+      "darkgreen",
+      "darkolivegreen",
+      "darkseagreen",
+      "darkslategray",
+      "darkslategrey",
+      "forestgreen",
+      "green",
+      "greenyellow",
+      "lawngreen",
+      "lightgreen",
+      "lime",
+      "limegreen",
+      "mediumseagreen",
+      "mediumspringgreen",
+      "olive",
+      "olivedrab",
+      "palegreen",
+      "seagreen",
+      "springgreen",
+      "yellowgreen"
+    ]
+  },
+  {
+    "parent_color": "blue",
+    "css3_colors": [
+      "blue",
+      "cadetblue",
+      "cornflowerblue",
+      "cyan",
+      "darkblue",
+      "darkcyan",
+      "deepskyblue",
+      "dodgerblue",
+      "lightblue",
+      "lightcyan",
+      "lightskyblue",
+      "lightsteelblue",
+      "mediumblue",
+      "midnightblue",
+      "navy",
+      "powderblue",
+      "royalblue",
+      "skyblue",
+      "steelblue",
+      "teal"
+    ]
+  },
+  {
+    "parent_color": "purple",
+    "css3_colors": [
+      "blueviolet",
+      "darkmagenta",
+      "darkorchid",
+      "darkslateblue",
+      "darkviolet",
+      "fuchsia",
+      "indigo",
+      "lavender",
+      "magenta",
+      "mediumorchid",
+      "mediumpurple",
+      "mediumslateblue",
+      "orchid",
+      "plum",
+      "purple",
+      "rebeccapurple",
+      "slateblue",
+      "violet"
+    ]
+  },
+  {
+    "parent_color": "white",
+    "css3_colors": [
+      "aliceblue",
+      "antiquewhite",
+      "azure",
+      "beige",
+      "cornsilk",
+      "floralwhite",
+      "ghostwhite",
+      "honeydew",
+      "ivory",
+      "lavenderblush",
+      "linen",
+      "mintcream",
+      "mistyrose",
+      "navajowhite",
+      "oldlace",
+      "seashell",
+      "snow",
+      "white",
+      "whitesmoke"
+    ]
+  },
+  {
+    "parent_color": "gray",
+    "css3_colors": [
+      "thistle",
+      "darkgray",
+      "darkgrey",
+      "dimgrey",
+      "gainsboro",
+      "grey",
+      "lightgrey",
+      "lightslategrey",
+      "silver",
+      "slategray",
+      "slategrey"
+    ]
+  },
+  {
+    "parent_color": "black",
+    "css3_colors": [
+      "black"
+    ]
+  }
+]
