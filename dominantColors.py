@@ -4,7 +4,7 @@
 
 # Phillip's Machine
 #source = "results_small/*.jpg"
-#destination = "destination.csv"
+#destination = "test.csv"
 
 # Jordan's Machine
 source = "/Users/jordancohill/Desktop/Quant/results_fifty/*.jpg"
@@ -26,7 +26,6 @@ import ntpath
 import webcolors
 
 data = np.empty((0,3), str)
-data = np.append(data, np.array([["filename", "RGB Value", "Color"]]), axis = 0)
 directory = glob.iglob(source)
 colorRange = json.load(open('colorRange.json'))
 
@@ -74,4 +73,6 @@ for file in directory:
     data = np.append(data, np.array([[filename, str(dominant_color), general_name]]),
                      axis = 0)
 
-pd.DataFrame(data).to_csv(destination)
+pd.DataFrame(data, columns = ["filename", "dominant_color_rgb",
+                             "dominant_color_name"]
+             ).to_csv(destination)
