@@ -1,0 +1,15 @@
+{% extends "layouts/default.html" %}
+
+{% block content %}
+<div class="hero-container">
+  <div class="hero text-light">
+    <h1 class="hero-title m-0">
+      IMDBvis
+    </h1>
+    <span class="hero-subtitle mb-3">
+      Movie Trends + Machine Learning
+    </span>
+    <a class="hero-btn btn btn-primary btn-lg" href="{{url_for('trends')}}" role="button">Explore</a>
+  </div>
+</div>
+{% endblock %}
