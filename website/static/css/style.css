@@ -54,9 +54,10 @@ body {
   background-color: var(--teal);
 }
 
+.btn-primary:active,
 .btn-primary:hover,
 .btn-primary:focus {
-  background-color: rgb(78, 245, 228);
+  background-color: rgb(59, 187, 174);
 }
 
 /* Containers */
@@ -89,7 +90,8 @@ h2 {
   font-size: 2.4rem;
 }
 
-p {
+p,
+span {
   font-size: 1.2rem;
 }
 
@@ -126,7 +128,6 @@ p {
   align-items: center;
   height: calc(100vh - 78px);
   width: 100%;
-  background-color: rgba(45, 55, 72, 0.5);
 }
 
 .hero {
@@ -216,4 +217,20 @@ p {
 .hvr-underline-from-center:hover:before, .hvr-underline-from-center:focus:before, .hvr-underline-from-center:active:before {
   left: 0;
   right: 0;
+}
+
+/* Swup - https://github.com/swup/swup */
+
+.transition-fade {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s cubic-bezier(0.19, 1, 0.22, 1),
+              transform 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+html.is-animating .transition-fade {
+  opacity: 0;
+  transform: translateY(-15%);
+  transition: opacity 0.3s cubic-bezier(0.35, 0.055, 0.675, 0.19),
+              transform 0.3s cubic-bezier(0.35, 0.055, 0.675, 0.19);
 }
