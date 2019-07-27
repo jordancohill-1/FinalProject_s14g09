@@ -154,7 +154,7 @@ span {
 
 /* Navbar */
 
-.navbar-brand {
+.navbar-dark .navbar-brand {
   font-weight: 700;
   font-size: 2rem;
 }
