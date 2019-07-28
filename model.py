@@ -1,4 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
+ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
@@ -8,7 +8,7 @@ class Movie(db.Model):
     title = db.Column(db.String(64), nullable=False)
     director = db.Column(db.String(64), nullable=False)
     critics = db.Column(db.Integer, nullable=False)
-    duration = db.Column(db.String(64), nullable=False)
+    duration = db.Column(db.Float, nullable=False)
     first_actor = db.Column(db.String(64), nullable=False)
     second_actor = db.Column(db.String(64), nullable=False)
     third_actor = db.Column(db.String(64), nullable=False)
