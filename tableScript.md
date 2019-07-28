@@ -1,3 +1,8 @@
+CREATE DATABASE movie;
+
+//connect to db
+
+
 CREATE TABLE movies(
 movie_id serial PRIMARY KEY, 
 title VARCHAR(500) not null,
