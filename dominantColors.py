@@ -7,13 +7,14 @@
 #destination = "test.csv"
 
 # Jordan's Machine
-source = "/Users/jordancohill/Desktop/Quant/results_fifty/*.jpg"
+source = "/Users/jordancohill/Desktop/Quant/results/*.jpg"
 destination = "/Users/jordancohill/Desktop/WebApps/final/dominantColors.csv"
 
 ################################################################################
 
 from sklearn.cluster import MiniBatchKMeans, KMeans
 from pathlib import Path
+from PIL import Image
 from colorthief import ColorThief
 import numpy as np
 import pandas as pd
@@ -25,14 +26,18 @@ import io
 import ntpath
 import webcolors
 
+
 data = np.empty((0,3), str)
 directory = glob.iglob(source)
 colorRange = json.load(open('colorRange.json'))
 
 for file in directory:
     filename = os.path.basename(file)
-    color_thief = ColorThief(file)
-    
+    img = Image.open(file)
+    img = img.resize((100, 100))
+    img.save("tmp.jpg")
+
+    color_thief = ColorThief("tmp.jpg")
     # get the dominant color
     dominant_color = color_thief.get_color(quality=1)
 

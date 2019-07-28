@@ -11,13 +11,14 @@ import os
 import glob
 
 
-directory = glob.iglob("/Users/jordancohill/Desktop/WebApps/Final_data/full/*.jpg")
+directory = glob.iglob("/Users/jordancohill/Desktop/WebApps/Final_data/small/*.jpg")
 for file in directory:
     filename = os.path.basename(file)
 
 # load the image and grab its width and height
     image = cv2.imread(str(file))
-    (h, w) = image.shape[:2]
+    image = image.resize((150,150))
+    #(h, w) = image.shape[:2]
 
     # convert the image from the RGB color space to the L*a*b*
     # color space -- since we will be clustering using k-means
@@ -46,7 +47,7 @@ for file in directory:
     # display the images and wait for a keypress
     #cv2.imshow("image", np.hstack([quant]))
 
-    path = "/Users/jordancohill/Desktop/Quant/results"
+    path = "/Users/jordancohill/Desktop/Quant/test"
     cv2.imwrite(os.path.join(path , filename), quant)
 
     #cv2.waitKey(0)
