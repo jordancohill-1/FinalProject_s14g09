@@ -20,11 +20,12 @@ cur.execute('''CREATE TABLE movies (
 
 conn.commit()
 
-df_movies = pd.read_json('imdb_output.json')
+df_movies = pd.read_json('imdb_output.json', orient='columns')
 df_images = df_movies['images']
 #print(df_images[1])
 for idx, m in df_movies.iterrows():
     paths = m['images'][0]['path']
+    paths = paths[5:]
     
     print(paths)
 #cur.execute('''INSERT INTO movies (images_path, imdb_score) VALUES (%s,%s)''', ( m['images'][0]['path'],  m.imdb_score))
