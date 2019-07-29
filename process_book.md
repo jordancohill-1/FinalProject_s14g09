@@ -116,3 +116,42 @@ general colors:
 - White
 - Gray
 - Black
+
+### Flask App
+
+#### UI Design (Phillip Tran)
+
+I primarily used [Boostrap](https://getbootstrap.com/) as a base and made
+modifications to mold my own asthetic. I leveraged a number of additional
+libraries in order to build the front-end of the site.
+
+##### Color Scheme
+
+I selected colors from the [Tailwind.css](https://tailwindcss.com/docs/customizing-colors/#default-color-palette)
+color pallette. I'm a fan of its vibrant, friendly, well-balanced colors.
+
+- White: `#F7FAFC`
+- Black: `#2D3748`
+- Primary: `#4FD1C5`
+
+##### Navbar
+
+I added a teal border at the top of the navbar. It spices up an otherwise
+ordinary navbar.
+
+To achieve the underline effect upon hovering over menu items, I used a snippet
+from the [Hover.css](https://ianlunn.github.io/Hover/) library. I gave the
+animation a nice snappy cubic bezier curve.
+
+##### Page Trasitions
+
+I used the [Swup](https://github.com/swup/swup) library for my page trasitions.
+I particularly like this library because it makes loading and ordinary web page
+feel like interacting with a native application.
+
+The transition consists of a snappy fade animation with a translation along the
+Y axis.
+
+I discovered that the navbar menu on mobile devices would not close when swup
+transitions to a new page. To combat this, I wrote a small Javascript snippet to
+close the navbar menu, if open, when swup initiates the transition animation.
