@@ -4,3 +4,4 @@ facial_recognition/db_actor_filter/env
 website/env
 website/__pycache__
 website/.vscode
+website/routes.pyc
