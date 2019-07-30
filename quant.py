@@ -17,8 +17,7 @@ for file in directory:
 
 # load the image and grab its width and height
     image = cv2.imread(str(file))
-    image = image.resize((150,150))
-    #(h, w) = image.shape[:2]
+    (h, w) = image.shape[:2]
 
     # convert the image from the RGB color space to the L*a*b*
     # color space -- since we will be clustering using k-means

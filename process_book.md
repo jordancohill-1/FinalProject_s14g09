@@ -155,3 +155,21 @@ Y axis.
 I discovered that the navbar menu on mobile devices would not close when swup
 transitions to a new page. To combat this, I wrote a small Javascript snippet to
 close the navbar menu, if open, when swup initiates the transition animation.
+
+
+##### Storing Data with Postgres(Jordan Cohill)
+
+Using the psycopg2 library a connection to the local database was established 
+and the Movies table was created. Next, the Pandas library was user to connect 
+to a local json file, utilizing Pandas read_json. The file was iterrated and 
+populated the Movies table with the movie path and it's IMDB rating. More data 
+can be added should it be needed.
+
+Lastly, the output from the dominant colors process was loaded to the Colors
+table by repeating the psycopg2 steps above and then using Pandas read_csv.
+Linking these tables is still in process but will be done by adding a foreign 
+key to the Colors table that references the unique ID from the movies table.
+
+
+
+
