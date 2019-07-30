@@ -11,10 +11,10 @@ cur.execute("DROP TABLE IF EXISTS movies;")
 
 cur.execute('''CREATE TABLE movies (
                      movie_id SERIAL PRIMARY KEY NOT NULL,
-                     images_path VARCHAR(200) NULL,
-                     imdb_score VARCHAR(50)  NULL,
-                     dominant_color_rgb VARCHAR(50)  NULL,
-                     dominant_color_name VARCHAR(50)  NULL);''')
+                     images_path TEXT NULL,
+                     imdb_score TEXT NULL,
+                     dominant_color_rgb TEXT NULL,
+                     dominant_color_name TEXT NULL);''')
 
 
 conn.commit()
