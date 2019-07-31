@@ -157,7 +157,7 @@ transitions to a new page. To combat this, I wrote a small Javascript snippet to
 close the navbar menu, if open, when swup initiates the transition animation.
 
 
-##### Storing Data with Postgres(Jordan Cohill)
+#### Storing Data with Postgres (Jordan Cohill)
 
 Using the psycopg2 library a connection to the local database was established 
 and the Movies table was created. Next, the Pandas library was user to connect 
