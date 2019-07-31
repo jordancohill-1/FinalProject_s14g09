@@ -4,7 +4,22 @@
 (function () {
 
     // Init data
-  /*  let data = [];
+    /*let data = [];
+    
+    d3.json("/static/data/movie_budget.json", function(d) {
+        return d;
+    }).then((d) => {
+ // Redefine data
+        data = d['domestic_gross'];
+console.log(data);
+        createVis();
+    }).catch((err) => {
+
+        console.error(err);
+    });
+
+console.log(data);*/
+/*   let data = [];
 
     // Fetch json data
     d3.json('/load_data', (d) => {
@@ -51,10 +66,24 @@ createVis();
         for (var i = 0; i < 1000; i++) { 
             dataset[i] = [random_item(colors), Math.floor(Math.random()*300000000)];
         }
-        console.log(dataset);
+        //console.log(dataset);
 
-        //Todo: This will need to be extracted and sorted from the dataset at some point
-        const colorRects = ["red", "blue", "green", "orange", "brown", "black"];
+        //Extract colors from dataset
+        const colorRects = [];
+        var color_found=false;
+        for (var i = 0; i < dataset.length; i++) {
+            color_found = false;
+            for (var j=0; j < colorRects.length; j++) {
+                if (dataset[i][0] == colorRects[j]) {
+                    color_found = true;
+                    break;
+                }
+            }
+            if(color_found == false) {
+                colorRects[colorRects.length]= dataset[i][0];
+            }
+        }
+        console.log(colorRects);
 
         //x Scale
         const scX = d3.scaleLinear()
@@ -82,7 +111,7 @@ createVis();
             .attr('transform', `translate(${plot_dx/2}, ${-margin.top+labels_font_size})`)
             .attr('text-anchor', 'middle')
             .attr('font-size', `${labels_font_size + 'px'}`)
-            .text('Movie Income');
+            .text('Domestic Gross');
 
         container.append('text')
             .attr("transform", "rotate(-90)")

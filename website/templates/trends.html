@@ -1,31 +1,51 @@
 {% extends "layouts/default.html" %}
-
 {% block content %}
-<div class="container">
-  <div class="row">
-    <div class="col">
-      <h2>Color v. Rating</h2>
-      <img src="https://source.unsplash.com/NodtnCsLdTE/1280x720"
-      class="img-fluid">
-      <hr class="hr-dotted">
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc auctor
-        dignissim odio eget eleifend. Ut efficitur vel diam vitae sollicitudin.
-        Integer vitae eros magna. Integer ultricies arcu ut orci iaculis, sit
-        amet varius turpis sollicitudin. Maecenas ac mollis sapien. Suspendisse
-        maximus quis ante sit amet sagittis. Cras in quam ac ante dignissim
-        sagittis. Orci varius natoque penatibus et magnis dis parturient montes,
-        nascetur ridiculus mus.
-      </p>
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2>Color v. Rating</h2>
+          <img src="https://source.unsplash.com/NodtnCsLdTE/1280x720"
+          class="img-fluid">
+          <hr class="hr-dotted">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc auctor
+            dignissim odio eget eleifend. Ut efficitur vel diam vitae sollicitudin.
+            Integer vitae eros magna. Integer ultricies arcu ut orci iaculis, sit
+            amet varius turpis sollicitudin. Maecenas ac mollis sapien. Suspendisse
+            maximus quis ante sit amet sagittis. Cras in quam ac ante dignissim
+            sagittis. Orci varius natoque penatibus et magnis dis parturient montes,
+            nascetur ridiculus mus.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <h3>Statistics</h3>
+            <div class ="row">
+                <div class = "col">
+                    <svg width="300" height="125" id="moviesAnalyzed"></svg>
+                </div>
+            </div>
+            <div class ="row">
+                <div class = "col">
+                    <svg width="300" height="125" id="dominantColors"></svg>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-8">
+          <h3>Dominant Colors</h3>
+            <svg width="600" height="300" id="barChart"></svg>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h3>Effects of movie poster dominant color on potential movie income</h3>
+            <svg width="900" height="300" id="moviePlot1"></svg>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <h2>Effects of movie poster dominant color on potential movie income</h2>
-        <svg width="900" height="600" id="moviePlot1"></svg>
-    </div>
-  </div>
-</div>
-<script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="/static/js/moviePlot1.js"></script>
+    <script src="/static/js/barChart.js"></script>
 {% endblock %}
