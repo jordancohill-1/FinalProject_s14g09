@@ -2,7 +2,7 @@
 import psycopg2
 import pandas as pd
 
-
+#conn = psycopg2.connect("host=localhost port=5432 dbname=movie user=phillip password=")
 conn = psycopg2.connect("host=localhost port=5433 dbname=movie user=postgres")
 cur = conn.cursor()
 
