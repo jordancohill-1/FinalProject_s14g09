@@ -24,7 +24,7 @@ df_colors = pd.read_csv('dominantColors.csv', index_col=0)
 for idx, c in df_colors.iterrows():
     
     cur.execute("""INSERT INTO colors ( movie, dominant_color_rgb, dominant_color_name) VALUES (%s,%s,%s)""", ( 
-        cur.execute("""SELECT movie_id FROM movies WHERE images_path = %s""" , (c.filename,)), c.dominant_color_rgb, c.dominant_color_name))
+        cur.execute("""IF EXISTS (SELECT movie_id FROM movies WHERE images_path = %s) END IF""" , (c.filename,)), c.dominant_color_rgb, c.dominant_color_name))
     print(mid)
 
 
