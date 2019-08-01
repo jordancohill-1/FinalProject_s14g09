@@ -13,6 +13,7 @@ cur.execute('''CREATE TABLE colors (
                      movie INT NOT NULL,
                      dominant_color_rgb TEXT NOT NULL,
                      dominant_color_name TEXT NOT NULL,
+                     exact_color_name TEXT NOT NULL,
                      FOREIGN KEY (movie) REFERENCES movies(movie_id)
                      );''')
 
@@ -27,8 +28,8 @@ for idx, c in df_colors.iterrows():
 	if mid is not None:
 		mid =int(mid[0])
 		print(mid)
-		cur.execute("""INSERT INTO colors ( movie, dominant_color_rgb, dominant_color_name) VALUES (%s,%s,%s)""", ( 
-			mid, c.dominant_color_rgb, c.dominant_color_name))
+		cur.execute("""INSERT INTO colors ( movie, dominant_color_rgb, dominant_color_name, exact_color_name) VALUES (%s,%s,%s,%s)""", ( 
+			mid, c.dominant_color_rgb, c.dominant_color_name, c.exact_color_name))
 		conn.commit()
 
 

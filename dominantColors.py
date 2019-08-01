@@ -27,7 +27,7 @@ import ntpath
 import webcolors
 
 
-data = np.empty((0,3), str)
+data = np.empty((0,4), str)
 directory = glob.iglob(source)
 colorRange = json.load(open('colorRange.json'))
 
@@ -66,7 +66,9 @@ for file in directory:
         colorName = closest_name
     else:
         colorName = actual_name
-    
+
+    exactName = colorName 
+
     def get_general_name(colorName):
         for item in colorRange:
             if colorName in item["css3_colors"]:
@@ -75,9 +77,9 @@ for file in directory:
     
     general_name = get_general_name(colorName)
 
-    data = np.append(data, np.array([[filename, str(dominant_color), general_name]]),
+    data = np.append(data, np.array([[filename, str(dominant_color), general_name, exactName]]),
                      axis = 0)
 
 pd.DataFrame(data, columns = ["filename", "dominant_color_rgb",
-                             "dominant_color_name"]
+                             "dominant_color_name", "exact_color_name"]
              ).to_csv(destination)
