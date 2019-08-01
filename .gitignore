@@ -6,3 +6,4 @@ website/__pycache__
 website/.vscode
 website/routes.pyc
 full/
+face_detection/env
