@@ -5,3 +5,4 @@ website/env
 website/__pycache__
 website/.vscode
 website/routes.pyc
+full/
