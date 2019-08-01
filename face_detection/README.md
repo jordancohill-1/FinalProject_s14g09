@@ -4,10 +4,12 @@
 
 Script that uses Dlib's CNN face detection to find faces in movie posters.
 
+[Google Colab Link](https://colab.research.google.com/drive/1VFrcniIjjWdVoouzlqKBsgxjQGazubgT)
+
 ## Package Requirements
 
 - psycopg2
-- pandas as pd
+- pandas
 - face_recognition
 - pillow
 

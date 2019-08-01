@@ -7,3 +7,4 @@ website/.vscode
 website/routes.pyc
 full/
 face_detection/env
+.vscode/

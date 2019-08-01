@@ -42,7 +42,6 @@ created using the 4 dominant colors of each poster.
 Next, I plan to extract the dominant colors from the quantized images so that we can make 
 predictions on what colors lead to better ratings/or sales.
 
-
 ### Facial Recognition (Phillip Tran)
 
 #### Nconst Scraping
@@ -170,6 +169,15 @@ table by repeating the psycopg2 steps above and then using Pandas read_csv.
 Linking these tables is still in process but will be done by adding a foreign 
 key to the Colors table that references the unique ID from the movies table.
 
+### Facial Detection (Phillip Tran)
 
+With the use of the [face_recognition](https://github.com/ageitgey/face_recognition)
+library I created a facial detection script. The script counts the number of
+faces in a given movie poster and adds a corresponding entry to the database.
 
+The library uses Dlib's CNN facial recognition model. I've configured it to
+upsample each poster in order to find smaller faces.
 
+I ran the script using [Google Colab](https://colab.research.google.com/drive/1VFrcniIjjWdVoouzlqKBsgxjQGazubgT).
+This allowed me to process the data using a GPU, which is much quicker than
+using my local machine.

@@ -16,7 +16,7 @@ conn = psycopg2.connect("host=localhost port=5432 dbname=movie user=phillip pass
 # images directory
 image_dir = "../full"
 
-#############################################################################
+################################################################################
 
 # connect to DB
 cur = conn.cursor()
@@ -41,7 +41,7 @@ for i, path in enumerate(images_paths):
   image = face_recognition.load_image_file(path)
 
   # find faces
-  face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=0, model="cnn")
+  face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=1, model="cnn")
 
   # store number of faces
   num_faces = len(face_locations)
