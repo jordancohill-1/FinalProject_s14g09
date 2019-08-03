@@ -10,8 +10,9 @@ from PIL import Image
 ###########
 
 # database
-conn = psycopg2.connect("host=localhost port=5432 dbname=movie user=phillip password=")
+#conn = psycopg2.connect("host=localhost port=5432 dbname=movie user=phillip password=")
 #conn = psycopg2.connect("host=localhost port=5433 dbname=movie user=postgres")
+conn = psycopg2.connect(database='s14g09_IMDB_ColorPrediction', user='s14g09', password="s14g09_Master", host='movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com', port='5432')
 
 # images directory
 image_dir = "../full"
@@ -56,7 +57,7 @@ for i, path in enumerate(images_paths):
   mid = int(cur.fetchone()[0])
   
   # print entry info
-  print(mid, path)
+  print(num_faces, filename)
 
   # create DB entry
   cur.execute("""INSERT INTO faces (movie, num_faces) VALUES({movie}, {num_faces})""".format(movie=mid,num_faces=num_faces))
