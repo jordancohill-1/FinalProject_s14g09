@@ -4,6 +4,23 @@
 (function () {
 
     // Init data
+    let color_data = [];
+    
+    // Fetch json data
+    d3.csv("static/data/dominantColors.csv")
+        .then((d) => {
+
+// Redefine data
+        color_data = d;
+
+        console.log(d);
+        console.log(color_data);
+        createVis();
+    }).catch((err) => {
+
+        console.error(err);
+    });
+        // Init data
     /*let data = [];
     
     d3.json("/static/data/movie_budget.json", function(d) {
@@ -36,7 +53,7 @@ console.log(data);*/
         console.error(err);
     });
 */
-createVis();
+//createVis();
     /*
      Function :: createVis()
      */
@@ -61,40 +78,40 @@ createVis();
 
         //Todo: This will need to be extracted from the data once we have the file.
         const colors = ["red", "blue", "green", "orange", "brown", "black"];
-        const dataset=[];
+        const color_dataset=[];
 
-        for (var i = 0; i < 1000; i++) { 
-            dataset[i] = [random_item(colors), Math.floor(Math.random()*300000000)];
+        for (var i = 0; i < color_data.length; i++) { 
+            color_dataset[i] = [color_data[i].dominant_color_name, Math.floor(Math.random()*300000000)];
         }
         //console.log(dataset);
 
         //Extract colors from dataset
         const colorRects = [];
         var color_found=false;
-        for (var i = 0; i < dataset.length; i++) {
+        for (var i = 0; i < color_dataset.length; i++) {
             color_found = false;
             for (var j=0; j < colorRects.length; j++) {
-                if (dataset[i][0] == colorRects[j]) {
+                if (color_dataset[i][0] == colorRects[j]) {
                     color_found = true;
                     break;
                 }
             }
             if(color_found == false) {
-                colorRects[colorRects.length]= dataset[i][0];
+                colorRects[colorRects.length]= color_dataset[i][0];
             }
         }
         console.log(colorRects);
 
         //x Scale
         const scX = d3.scaleLinear()
-            .domain(d3.extent(dataset, (d) => {
+            .domain(d3.extent(color_dataset, (d) => {
                 return d[1];
             }))
             .range([0, plot_dx]);
 
         //y Scale
         const scY = d3.scaleLinear()
-            .domain([0, dataset.length])
+            .domain([0, color_dataset.length])
             .range([0, plot_dy]);
 
         //Handle Axis
@@ -138,8 +155,8 @@ createVis();
             });
         */
 
-        var dataSquares = container.selectAll("#dataSquare")
-            .data(dataset)
+        container.selectAll("#dataLine")
+            .data(color_dataset)
             .enter()
             .append("rect")
             .attr("x", function(d,i) {
@@ -154,7 +171,7 @@ createVis();
             .attr("fill", function(d) {
                 return d[0];
             })
-            .attr("id", "dataSquare");
+            .attr("id", "dataLine");
 
     function random_item(items)
     {  
