@@ -56,10 +56,10 @@ console.log(data);*/
 
     // Fetch json data
     d3.json('/load_data', (d) => {
-        console.log("loaded data: " , d);
         return d;
     }).then((d) => {
 
+        console.log("loaded data: " , d);
         // Redefine data
         data = d['movies'];
 

@@ -1,8 +1,12 @@
+# Database handling: https://towardsdatascience.com/sqlalchemy-python-tutorial-79a577141a91
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from werkzeug.utils import secure_filename
 import upload
 from models import db, Movie, Color
-from sqlalchemy import create_engine;
+import sqlalchemy as db
+from sqlalchemy import create_engine
+from sqlalchemy import Table, Column, String, MetaData
+import pandas as pd
 #from forms import UsersForm
 
 UPLOAD_FOLDER = 'UPLOAD_FOLDER'
@@ -14,13 +18,37 @@ app = Flask(__name__)
 #db.init_app(app)
 db_string = "postgres://s14g09:s14g09_Master@movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com:5432/s14g09_IMDB_ColorPrediction"
 
-db = create_engine(db_string)
-print(" Database has the following tables: ", db.table_names())
+engine = create_engine(db_string)
+print(" Database has the following tables: ", engine.table_names())
 
+connection = engine.connect()
+metadata = db.MetaData()
 
-movies_table = db.execute('SELECT * FROM movies')
-colors_table = db.execute('SELECT * FROM colors')
-faces_table = db.execute('SELECT * FROM faces')
+movies_table = db.Table('movies', metadata, autoload=True, autoload_with=engine)
+colors_table = db.Table('colors', metadata, autoload=True, autoload_with=engine)
+faces_table = db.Table('faces', metadata, autoload=True, autoload_with=engine)
+
+# Print the column names
+#print(movies_table.columns.keys())
+#print(colors_table.columns.keys())
+#print(faces_table.columns.keys())
+
+# Print full table metadata
+#print(repr(metadata.tables['movies']))
+#print(repr(metadata.tables['colors']))
+#print(repr(metadata.tables['faces']))
+
+query = db.select([movies_table, colors_table])
+query = query.select_from(movies_table.join(colors_table, movies_table.columns.movie_id == colors_table.columns.movie))
+results = connection.execute(query).fetchall()
+df = pd.DataFrame(results)
+df.columns = results[0].keys()
+print(df.head(10))
+
+#movies_table = db.execute('SELECT * FROM movies')
+#colors_table = engine.execute('SELECT * FROM colors')
+#faces_table = engine.execute('SELECT * FROM faces')
+
 #for row in movies_table:
 #	print("movie id:", row['movie_id'], "path:", row['images_path'], "score:", row['imdb_score'])
 #for row in colors_table:
@@ -64,12 +92,7 @@ def upload():
 @app.route('/load_data', methods=['GET'])
 def load_data():
     movies_json = {'movie': []}
-    movies = Movie.query.all()
-    #print(movies)
-    #for movie in movies_table:
-    #    movie_info = movie.__dict__
-    #    del movie_info['_sa_instance_state']
-    #    movies_json['movie'].append(movie_info)
+    #Todo: Figure out how to pass the data
     return jsonify(movies_json)
 
 if __name__ == "__main__":

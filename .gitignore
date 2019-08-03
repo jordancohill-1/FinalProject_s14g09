@@ -12,3 +12,4 @@ face_recognition/actor_scraper/faces
 face_recognition/actor_scraper/env
 face_recognition/face_recognition/faces
 face_recognition/face_recognition/env
+.DS_Store
