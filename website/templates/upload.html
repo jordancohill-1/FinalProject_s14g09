@@ -1,6 +1,17 @@
 {% extends "layouts/default.html" %}
 
 {% block content %}
+<p>
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+    {% endif %}
+  {% endwith %}
+</p>
 <div class="container">
   <div class="row">
     <div class="col">
@@ -9,9 +20,11 @@
       <form>
         <div class="input-group mb-3">
           <div class="custom-file">
-            <input type="file" class="custom-file-input" id="poster">
+            <input type="file" name="file" autocomplete="off" required>
+           <!-- <input type="file" class="custom-file-input" id="poster">-->
             <label id="posterLabel" class="custom-file-label" for="moviePoster">upload poster...</label>
           </div>
+          <input type="submit" value="Submit">
         </div>
       </form>
     </div>
