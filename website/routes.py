@@ -65,6 +65,7 @@ def upload():
 def load_data():
     movies_json = {'movie': []}
     movies = Movie.query.all()
+    #print(movies)
     #for movie in movies_table:
     #    movie_info = movie.__dict__
     #    del movie_info['_sa_instance_state']
