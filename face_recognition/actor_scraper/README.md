@@ -1,10 +1,15 @@
-# Face Detection
+# Actor Scraper
 
 ## Introduction
 
-Script that uses Dlib's CNN face detection to find faces in movie posters.
+### Actor Scraper
 
-[Google Colab Link](https://colab.research.google.com/drive/1VFrcniIjjWdVoouzlqKBsgxjQGazubgT)
+Scrapes image and name from the actors provided in the `nconst.json` file.
+
+### Actor to DB
+
+Generates face encodings from image and creates DB entry with related actor
+information.
 
 ## Package Requirements
 
@@ -23,7 +28,13 @@ pip install -r requirements.txt
 python actor_scraper.py
 ```
 
+```
+python actor_to_db.py
+```
+
 ### Options
+
+#### Actor Scraper
 
 ```
 base_url = 'https://www.imdb.com/name/'
@@ -37,3 +48,20 @@ img_dest = 'images'
 - `nconsts_file` - where the nconsts file is stored
 - `json_dest` - where the json file will be written to
 - `img_dest` - where the images will be written to
+
+#### Actor to DB
+
+```
+# database
+conn = psycopg2.connect(database='s14g09_IMDB_ColorPrediction', user='s14g09', password="s14g09_Master", host='movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com', port='5432')
+
+# faces directory
+faces_dir = 'faces'
+
+# actors file
+actors_file = 'actors.json'
+```
+
+- `conn` - connection info for the database
+- `faces_dir` - where the actor faces are stored
+- `actors_file` - where the actor info is stored 

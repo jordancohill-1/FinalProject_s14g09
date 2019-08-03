@@ -67,6 +67,26 @@ file, most likely due to the IMDB script I was scraping having duplicate actors.
 I wrote a small snippet to filter out duplicate nconst values. This gave me the
 output I expected: 996 objects and 996 images.
 
+#### Export to Database
+
+With a separate script called `actor_to_db.py` I generated entries to the
+database. Each entry includes an encoding of each actor's face, their
+name, nconst, and image filename.
+
+By pre-generating our face encodings and associating them to the proper actor,
+we won't have to generate them before processing a poster for known faces.
+
+Along the way I encountered a speed bump. I used this line to extract the
+encoding data: `face_recognition.face_encodings(face)[0]`. However, for some
+images, it returned an `index out of range` error. I reasoned that the library
+must be unable to find a face in some of the images. This could be caused by the
+actor's face being heavily obscured or at a strange angle. To resolve the issue,
+I made the script check to see if a face was detected before making an entry to
+the database.
+
+As a result of this, I was able to extract 972 faces out of the original 996
+images (97.5%).
+
 #### Face Recognition
 
 Also a WIP.

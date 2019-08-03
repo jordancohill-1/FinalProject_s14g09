@@ -17,12 +17,9 @@ import face_recognition
 ###########
 
 # database
-conn = psycopg2.connect("host=localhost port=5432 dbname=movie user=phillip password=LLMMl167")
+#conn = psycopg2.connect("host=localhost port=5432 dbname=movie user=phillip password=")
 #conn = psycopg2.connect("host=localhost port=5433 dbname=movie user=postgres")
-#conn = psycopg2.connect(database='s14g09_IMDB_ColorPrediction', user='s14g09', password="s14g09_Master", host='movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com', port='5432')
-
-# posters directory
-posters_dir = '../../full'
+conn = psycopg2.connect(database='s14g09_IMDB_ColorPrediction', user='s14g09', password="s14g09_Master", host='movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com', port='5432')
 
 # faces directory
 faces_dir = 'faces'
