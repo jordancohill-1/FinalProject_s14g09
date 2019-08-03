@@ -35,3 +35,6 @@ for idx, m in df_movies.iterrows():
 
 cur.close()
 conn.close()
+
+
+
