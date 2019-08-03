@@ -50,18 +50,23 @@ for i, path in enumerate(images_paths):
   # extract filename
   filename = path.replace("../full/", "")
 
-  # extract movie id
+  # query database for related movie
   cur.execute("""(SELECT movie_id FROM movies WHERE images_path='{}')""".format(filename))
 
-  # store movie id
-  mid = int(cur.fetchone()[0])
+  # store database query
+  mid = cur.fetchone()
   
-  # print entry info
-  print(num_faces, filename)
+  # run if query gives a result
+  if mid is not None:
+    # extract movie id
+    mid = int(mid[0])
+    
+    # print entry info
+    print(num_faces, filename)
 
-  # create DB entry
-  cur.execute("""INSERT INTO faces (movie, num_faces) VALUES({movie}, {num_faces})""".format(movie=mid,num_faces=num_faces))
-  conn.commit()
+    # create DB entry
+    cur.execute("""INSERT INTO faces (movie, num_faces) VALUES({movie}, {num_faces})""".format(movie=mid,num_faces=num_faces))
+    conn.commit()
 
 cur.close()
 conn.close()
