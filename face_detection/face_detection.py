@@ -1,9 +1,11 @@
 import os
+import cv2
 import json
+import decimal
+import imutils
 import psycopg2
 import pandas as pd
 import face_recognition
-from PIL import Image
 
 ###########
 # OPTIONS #
@@ -38,21 +40,28 @@ images_paths = [os.path.join(image_dir, f) for f in files if f.endswith("jpg")]
 
 # process image files
 for i, path in enumerate(images_paths):
+  #scale down image for processing
+  image = cv2.imread(path, 0)
+  image = imutils.resize(image, height=1000)
+  
+  # temporarily write image to disk
+  cv2.imwrite('temp.jpg', image)
+  
   # load image
-  image = face_recognition.load_image_file(path)
+  image = face_recognition.load_image_file('temp.jpg')
 
   # find faces
-  face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=1, model="cnn")
+  face_locations = face_recognition.face_locations(image, number_of_times_to_upsample=2, model="cnn")
 
   # store number of faces
   num_faces = len(face_locations)
   
   # extract filename
-  filename = path.replace("../full/", "")
+  filename = path.replace(image_dir, "")
 
   # query database for related movie
-  cur.execute("""(SELECT movie_id FROM movies WHERE images_path='{}')""".format(filename))
-
+  cur.execute(f"SELECT movie_id FROM movies WHERE images_path='{filename}'")
+  
   # store database query
   mid = cur.fetchone()
   
@@ -62,7 +71,7 @@ for i, path in enumerate(images_paths):
     mid = int(mid[0])
     
     # print entry info
-    print(num_faces, filename)
+    print(f'{i} - {num_faces} faces - {filename}')
 
     # create DB entry
     cur.execute("""INSERT INTO faces (movie, num_faces) VALUES({movie}, {num_faces})""".format(movie=mid,num_faces=num_faces))

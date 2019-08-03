@@ -10,8 +10,8 @@
 
 base_url = 'https://www.imdb.com/name/'
 nconsts_file = 'nconsts/nconsts.json'
-json_dest = 'actors/actors.json'
-img_dest = 'images'
+json_dest = 'actors.json'
+img_dest = 'actors'
 
 ################################################################################
 
@@ -29,6 +29,9 @@ actors = []
 # load nconsts file
 with open(nconsts_file) as json_file:
   nconsts = json.load(json_file)
+
+# remove duplicates
+nconsts = list(set(nconsts))
 
 # find length of nconsts list
 nconsts_length = len(nconsts)

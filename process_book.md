@@ -47,8 +47,8 @@ predictions on what colors lead to better ratings/or sales.
 #### Nconst Scraping
 
 Using a simple Node script I was able to extract the `nconst` identifiers of the
-top 1000 actors on IMDB. This ensures that we have the most relevant set of
-actors to identify trends with.
+[top 1000 actors on IMDB](https://www.imdb.com/list/ls058011111/). This ensures
+that we have the most relevant set of actors to identify trends with.
 
 #### Actor Scraping
 
@@ -59,6 +59,13 @@ crawls this URL to find the actor's name and image.
 
 The actor's name, nconst, and image filename are stored in the `actors.json`
 file and the related image is downloaded.
+
+After running the script for the first time I discovered that 1000 objects were
+in the JSON file but only 996 images were generated. After some investigation,
+I found out that there were duplicate nconsts contained in the `nconst.json`
+file, most likely due to the IMDB script I was scraping having duplicate actors.
+I wrote a small snippet to filter out duplicate nconst values. This gave me the
+output I expected: 996 objects and 996 images.
 
 #### Face Recognition
 
@@ -170,8 +177,15 @@ library I created a facial detection script. The script counts the number of
 faces in a given movie poster and adds a corresponding entry to the database.
 
 The library uses Dlib's CNN facial recognition model. I've configured it to
-upsample each poster in order to find smaller faces.
+upsample each poster once in order to find smaller faces.
 
 I ran the script using [Google Colab](https://colab.research.google.com/drive/1VFrcniIjjWdVoouzlqKBsgxjQGazubgT).
 This allowed me to process the data using a GPU, which is much quicker than
 using my local machine.
+
+After running it through Colab, I discovered that I ran out of vRAM about 1000
+images in. To deal with this I downscaled each image to 1000px in height
+(preserving aspect ratio) and configured the library to upscale the image twice.
+
+With this change I was able to process all of the data without coming across
+hardware limits while maintaining similar accuracy.

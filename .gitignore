@@ -8,5 +8,5 @@ website/routes.pyc
 full/
 face_detection/env
 .vscode/
-facial_recognition/actor_scraper/images
+facial_recognition/actor_scraper/actors
 facial_recognition/actor_scraper/env

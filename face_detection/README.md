@@ -11,7 +11,8 @@ Script that uses Dlib's CNN face detection to find faces in movie posters.
 - psycopg2
 - pandas
 - face_recognition
-- pillow
+- opencv-python2
+- imutils
 
 ### Install Package Requirements
 
