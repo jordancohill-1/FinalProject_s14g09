@@ -14,7 +14,7 @@ cur.execute("DROP TABLE IF EXISTS movies;")
 cur.execute('''CREATE TABLE movies (
                      movie_id SERIAL PRIMARY KEY NOT NULL,
                      images_path TEXT NULL,
-                     imdb_score TEXT NULL);''')
+                     imdb_score NUMERIC NULL);''')
 
 
 conn.commit()
@@ -35,6 +35,10 @@ for idx, m in df_movies.iterrows():
 
 cur.close()
 conn.close()
+
+
+
+
 
 
 

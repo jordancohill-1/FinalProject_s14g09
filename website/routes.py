@@ -1,35 +1,14 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from werkzeug.utils import secure_filename
 import upload
-from models import db, Movie, Color
+from models import db, Movie #, Color
 from sqlalchemy import create_engine;
-#from forms import UsersForm
 
-UPLOAD_FOLDER = 'UPLOAD_FOLDER'
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 app = Flask(__name__)
 
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/usersdb'
-#db.init_app(app)
-db_string = "postgres://s14g09:s14g09_Master@movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com:5432/s14g09_IMDB_ColorPrediction"
-
-db = create_engine(db_string)
-print(" Database has the following tables: ", db.table_names())
-
-
-movies_table = db.execute('SELECT * FROM movies')
-colors_table = db.execute('SELECT * FROM colors')
-faces_table = db.execute('SELECT * FROM faces')
-#for row in movies_table:
-#	print("movie id:", row['movie_id'], "path:", row['images_path'], "score:", row['imdb_score'])
-#for row in colors_table:
-#	print("color id:", row['color_id'], "movie:", row['movie'])
-
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-
-app.secret_key = "e14a-key"
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://s14g09:s14g09_Master@movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com:5432/s14g09_IMDB_ColorPrediction"
+db.init_app(app)
 
 @app.route("/")
 def index():
@@ -63,14 +42,20 @@ def upload():
 
 @app.route('/load_data', methods=['GET'])
 def load_data():
-    movies_json = {'movie': []}
-    movies = Movie.query.all()
-    #print(movies)
-    #for movie in movies_table:
-    #    movie_info = movie.__dict__
-    #    del movie_info['_sa_instance_state']
-    #    movies_json['movie'].append(movie_info)
-    return jsonify(movies_json)
+	movies_json = {'movies': []}
+	movies = Movie.query.all()
+	#colors = Color.query.filter_by(movie=movies.movie_id);
+	#for color in colors:
+	#	color_info = color.__dict__
+	#	del color_info['_sa_instance_state']
+	#	color_json['color'].append(color_info)
+	#print(color_json)
+	#return jsonify(color_json)
+	for movie in movies:
+		movie_info = movie.__dict__
+		del movie_info['_sa_instance_state']
+		movies_json['movie'].append(movie_info)
+	return jsonify(movies_json)
 
 if __name__ == "__main__":
   app.run(debug=True)
