@@ -4,7 +4,7 @@ import pandas as pd
 
 #conn = psycopg2.connect("host=localhost port=5432 dbname=movie user=phillip password=")
 #conn = psycopg2.connect("host=localhost port=5433 dbname=movie user=postgres")
-conn = psycopg2.connect(database='s14g09_IMDB_ColorPrediction', user='s14g09', password="s14g09_Master", host='movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com', port='5432')
+conn = psycopg2.connect(database='s14g09_IMDB_ColorPrediction', user='s14g09', password="s14g09_Master", host='s14g09_Master', port='5432')
 cur = conn.cursor()
 
 cur.execute("DROP TABLE IF EXISTS colors;")
@@ -36,3 +36,6 @@ for idx, c in df_colors.iterrows():
 
 cur.close()
 conn.close()
+
+
+
