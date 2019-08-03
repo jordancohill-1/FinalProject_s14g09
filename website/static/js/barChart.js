@@ -4,6 +4,26 @@
 (function () {
 
     // Init data
+    let data = [];
+
+    // Fetch json data
+    d3.csv("static/data/dominantColors.csv")
+    //d3.json('/load_data', (d) => {    
+
+      //  return d;
+    //})
+.then((d) => {
+// Redefine data
+        data = d;
+
+        //console.log(d);
+        //console.log(data);
+        createVis();
+    }).catch((err) => {
+
+        console.error(err);
+    });
+    // Init data
  /*   let data = [];
 
     // Fetch json data
@@ -21,7 +41,7 @@
         console.error(err);
     });*/
 
-    createVis();
+    //createVis();
 
     /*
      Function :: createVis()
@@ -42,12 +62,15 @@
             .style('transform', `translate(${margin.left}px, ${margin.top}px)`);
 
          //Todo: This will need to be extracted from the data once we have the file.
-        const colors = ["red", "blue", "green", "orange", "brown", "black"];
+        //const colors = ["red", "blue", "green", "orange", "brown", "black"];
         const dataset=[];
 
-        for (var i = 0; i < 1000; i++) { 
-            dataset[i] = [random_item(colors), Math.floor(Math.random()*300000000)];
+        for (var i = 0; i < data.length; i++) { 
+            dataset[i] = [data[i].dominant_color_name, Math.floor(Math.random()*300000000)];
         }
+        /*for (var i = 0; i < 1000; i++) { 
+            dataset[i] = [random_item(colors), Math.floor(Math.random()*300000000)];
+        }*/
         
         //Extract colors from dataset
         const colorsArray = [];
@@ -65,6 +88,7 @@
             }
         }
         
+
         //Print the statistics
         printScaledNum('#moviesAnalyzed', dataset.length, "movies analyzed");
         printScaledNum('#dominantColors', colorsArray.length, "dominant colors");
