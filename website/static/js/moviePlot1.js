@@ -5,7 +5,8 @@
 
     // Init data
     let color_data = [];
-    
+    let movie_data = [];
+
     // Fetch json data
     d3.csv("static/data/dominantColors.csv")
         .then((d) => {
@@ -13,14 +14,27 @@
 // Redefine data
         color_data = d;
 
-        console.log(d);
-        console.log(color_data);
-        createVis();
+        //console.log(d);
+        //console.log("Color Data = ",  color_data);
     }).catch((err) => {
 
         console.error(err);
     });
-        // Init data
+
+    // Fetch json data
+    d3.json("static/data/movie_budget.json")
+        .then((d) => {
+
+        // Redefine data
+        movie_data = d;
+
+        //console.log(d);
+        //console.log("Movie Data = ",  movie_data);
+        //createVis();
+    }).catch((err) => {
+
+        console.error(err);
+    });
     /*let data = [];
     
     d3.json("/static/data/movie_budget.json", function(d) {
@@ -36,24 +50,25 @@ console.log(data);
     });
 
 console.log(data);*/
-/*   let data = [];
+
+//This section should work once we cna load data from database
+   let data = [];
 
     // Fetch json data
     d3.json('/load_data', (d) => {
-
+        console.log("loaded data: " , d);
         return d;
     }).then((d) => {
 
         // Redefine data
-        data = d['users'];
+        data = d['movies'];
 
         createVis();
     }).catch((err) => {
 
         console.error(err);
     });
-*/
-//createVis();
+
     /*
      Function :: createVis()
      */
