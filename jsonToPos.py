@@ -5,9 +5,8 @@ import psycopg2
 import pandas as pd
 ##psql "host=movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com port=5432 user=s14g09 password=s14g09_Master dbname=s14g09_IMDB_ColorPrediction sslmode=verify-full sslrootcert=<path>"
 #conn = psycopg2.connect("host=localhost port=5432 dbname=movie user=phillip password=")
-conn = psycopg2.connect("host=localhost port=5433 dbname=movie user=postgres")
-#conn = psycopg2.connect(database='s14g09_IMDB_ColorPrediction', user='s14g09', password="s14g09_Master",
-  #     host='movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com', port='5432')
+#conn = psycopg2.connect("host=localhost port=5433 dbname=movie user=postgres")
+conn = psycopg2.connect(database='s14g09_IMDB_ColorPrediction', user='s14g09', password="s14g09_Master", host='movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com', port='5432')
 cur = conn.cursor()
 
 cur.execute("DROP TABLE IF EXISTS movies;")
