@@ -17,3 +17,8 @@ class Color(db.Model):
 	dominant_color_name = db.Column(db.String(64), nullable=False)
 	exact_color_name = db.Column(db.String(64), nullable=False)
 
+class Face(db.Model):
+  __tablename__ = 'faces'
+  face_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  movie = db.Column(db.Integer, db.ForeignKey('movies.movie_id'), nullable=False)
+  num_faces = db.Column(db.Integer, nullable=False)
