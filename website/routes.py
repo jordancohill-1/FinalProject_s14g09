@@ -43,7 +43,7 @@ def upload():
 @app.route('/load_data', methods=['GET'])
 def load_data():
 	movies_json = {'movies': []}
-	movies = db.session.query(Movie, Color)
+	movies = db.session.query(Movie, Color).all()
 	print(movies)
 	for movie in movies:
 		movie_info = movie.__dict__
