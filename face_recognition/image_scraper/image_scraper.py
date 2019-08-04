@@ -41,7 +41,7 @@ arguments = {'keywords': '',
 for i, actor in enumerate(actors):
   # set up search arg, image dir name
   arguments['keywords'] = f'{actor["name"]} headshot'
-  arguments['image_directory'] = f'{actor["name"]}'
+  arguments['image_directory'] = f'{actor["nconst"]}'
 
   # download images with args
   response.download(arguments)
