@@ -1,47 +1,26 @@
 'use strict';
 
 // IIFE
-(function () {
-
-    // Init data
+(function() {
+    // Init Data
     let data = [];
-
+ 
     // Fetch json data
-    d3.csv("static/data/dominantColors.csv")
-    //d3.json('/load_data', (d) => {    
-
-      //  return d;
-    //})
-.then((d) => {
-// Redefine data
-        data = d;
-
-        //console.log(d);
-        //console.log(data);
-        createVis();
-    }).catch((err) => {
-
-        console.error(err);
-    });
-    // Init data
- /*   let data = [];
-
-    // Fetch json data
-    d3.json('/load_data', (d) => {
-
-        return d;
+    let promise = d3.json('/load_data', (d) => {
+         
+            return d;
     }).then((d) => {
-
-        // Redefine data
-        data = d['users'];
-
-        createVis();
+        
+        data = d['movies'];
+        
+        // Delegate to createVis
+            createVis();
     }).catch((err) => {
+             
+      console.error(err);
+                     
+    })
 
-        console.error(err);
-    });*/
-
-    //createVis();
 
     /*
      Function :: createVis()

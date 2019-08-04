@@ -1,73 +1,25 @@
 'use strict';
 
 // IIFE
-(function () {
-
-    // Init data
-    let color_data = [];
-    let movie_data = [];
-
+(function() {
+    // Init Data
+    let data = [];
+ 
     // Fetch json data
-    d3.csv("static/data/dominantColors.csv")
-        .then((d) => {
-
-// Redefine data
-        color_data = d;
-
-        //console.log(d);
-        //console.log("Color Data = ",  color_data);
-    }).catch((err) => {
-
-        console.error(err);
-    });
-
-    // Fetch json data
-    d3.json("static/data/movie_budget.json")
-        .then((d) => {
-
-        // Redefine data
-        movie_data = d;
-
-        //console.log(d);
-        //console.log("Movie Data = ",  movie_data);
-        //createVis();
-    }).catch((err) => {
-
-        console.error(err);
-    });
-    /*let data = [];
-    
-    d3.json("/static/data/movie_budget.json", function(d) {
-        return d;
+    let promise = d3.json('/load_data', (d) => {
+         
+            return d;
     }).then((d) => {
- // Redefine data
-        data = d['domestic_gross'];
-console.log(data);
-        createVis();
-    }).catch((err) => {
-
-        console.error(err);
-    });
-
-console.log(data);*/
-
-//This section should work once we cna load data from database
-   let data = [];
-
-    // Fetch json data
-    d3.json('/load_data', (d) => {
-        return d;
-    }).then((d) => {
-
-        console.log("loaded data: " , d);
-        // Redefine data
+        
         data = d['movies'];
-
-        createVis();
+        
+        // Delegate to createVis
+            createVis();
     }).catch((err) => {
-
-        console.error(err);
-    });
+             
+      console.error(err);
+                     
+    })
 
     /*
      Function :: createVis()

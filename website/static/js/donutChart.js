@@ -1,31 +1,25 @@
-// Used the following for the hover action: http://bl.ocks.org/erichoco/6694616
-
-'use strict';
+/'use strict';
 
 // IIFE
-(function () {
-
-    // Init data
+(function() {
+    // Init Data
     let data = [];
-
+ 
     // Fetch json data
-    //d3.csv("static/data/dominantColors.csv")
-    d3.csv("https://gist.githubusercontent.com/mbostock/a3541c73fdccd432acc8b11bf9f02641/raw/2bd0fce0bf34b020e93c5f6527b5a9d08c33ff06/population-by-age.csv")
-        .then((d) => {
-
-        // Redefine data
-        data = d;
-        //console.log(d);
-        console.log(data);
-
-
-        createVis();
+    let promise = d3.json('/load_data', (d) => {
+         
+            return d;
+    }).then((d) => {
+        
+        data = d['movies'];
+        
+        // Delegate to createVis
+            createVis();
     }).catch((err) => {
-
-        console.error(err);
-    });
-    //const data = d3.csv("https://gist.githubusercontent.com/mbostock/a3541c73fdccd432acc8b11bf9f02641/raw/2bd0fce0bf34b020e93c5f6527b5a9d08c33ff06/population-by-age.csv", d3.autoType)
-   
+             
+      console.error(err);
+                     
+    })
 
    
 //console.log(color);
