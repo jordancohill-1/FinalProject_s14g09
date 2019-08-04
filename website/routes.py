@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from werkzeug.utils import secure_filename
 import upload
-from models import db, Movie, Color
+from models import db, Movie, Color, Face
 from sqlalchemy import create_engine;
 
 
@@ -73,6 +73,16 @@ def load_movie_data():
 		del movie_info['_sa_instance_state']
 		movies_json['movies'].append(movie_info)
 	return jsonify(movies_json)
+
+@app.route('/load_face_data', methods=['GET'])
+def load_face_data():
+	faces_json = {'faces': []}
+	faces = db.session.query(Face).join(Movie).all()
+	for face in faces:
+		face_info = face.__dict__
+		del face_info['_sa_instance_state']
+		faces_json['faces'].append(face_info)
+	return jsonify(faces_json)
 
 if __name__ == "__main__":
   app.run(debug=True)

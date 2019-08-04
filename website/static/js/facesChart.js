@@ -3,17 +3,18 @@
 // IIFE
 (function() {
     // Init Data
-    let color_data = [];
+    let face_data = [];
     let movie_data = [];
- 
-    // Fetch color data
-    let promise = d3.json('/load_color_data', (d) => { 
-    
+    let color_data = [];
+    // Fetch face data
+    let promise = d3.json('/load_face_data', (d) => { 
+            
             return d;
     
     }).then((d) => {
         
-        color_data = d['colors'];
+        face_data = d['faces'];
+        //console.log("Faces = ", face_data);
         
         //Now get the movie data
         let promise = d3.json('/load_movie_data', (d) => { 
@@ -24,8 +25,23 @@
             
             movie_data = d['movies'];
             
-            // Delegate to createVis
-            createVis();
+            //And now, the color data
+            let promise = d3.json('/load_color_data', (d) => { 
+        
+                    return d;
+            
+            }).then((d) => {
+                
+                color_data = d['colors'];
+                
+                // Delegate to createVis
+                createVis();
+           
+            }).catch((err) => {
+                     
+              console.error(err);
+                             
+            })
        
         }).catch((err) => {
                  
@@ -45,7 +61,7 @@
     function createVis() {
 
         // Get svg
-        const svg = d3.select('#moviePlot');
+        const svg = d3.select('#facesChart');
 
         //Config
         const labels_font_size = 16;
@@ -63,10 +79,11 @@
 
         //Extract the dominant colors and imdb scores
         const dataset=[];
-        for (var i = 0; i < color_data.length; i++) { 
-            dataset[i] = [color_data[i].dominant_color_name, movie_data[i].imdb_score];
+        for (var i = 0; i < face_data.length; i++) { 
+            dataset[i] = [face_data[i].num_faces, movie_data[i].imdb_score];
         }
-        
+        console.log(dataset);
+
         //Find unique colors and scores.  IF color/imdb_score combination had been found before, increment a number of occurence 
         //for the combination value 
         const new_dataset =[];
@@ -84,7 +101,8 @@
                 new_dataset[new_dataset.length] = [dataset[i][0], dataset[i][1], 1, color_data[i].dominant_color_rgb];
             }
         }
-        
+        console.log(new_dataset);
+
 
         //Extract colors from dataset
         const colorRects = [];
@@ -173,17 +191,19 @@
             })
             .attr("height", 20)
             .attr("fill", function(d) {
+                console.log(d[3]);
                 return ("rgb" + d[3]);
             })
             .attr("stroke", "rgba(150,150,150,0.7)")
-            .attr("stroke-width", 0)/*function(d) {
+            .attr("stroke-width", function(d) {
                 if(d[0] == "white") {
                     return 1;
                 }
                 else {
                     return 0;
                 }
-            })*/
+                print
+            })
             .attr("id", "dataLine");
 
     function random_item(items)
