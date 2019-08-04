@@ -28,9 +28,11 @@ for idx, m in df_movies.iterrows():
         paths = paths[5:]
     except IndexError:
         paths = " "
+
+    score = m.imdb_score[0];
     
-    print(paths)
-    cur.execute('''INSERT INTO movies (images_path, imdb_score) VALUES (%s,%s)''', ( paths,  m.imdb_score))
+    print(score)
+    cur.execute('''INSERT INTO movies (images_path, imdb_score) VALUES (%s,%s)''', ( paths,  score))
     conn.commit()
 
 cur.close()

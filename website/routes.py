@@ -44,17 +44,13 @@ def upload():
 def load_data():
 	movies_json = {'movies': []}
 	movies = Movie.query.all()
-	#colors = Color.query.filter_by(movie=movies.movie_id);
-	#for color in colors:
-	#	color_info = color.__dict__
-	#	del color_info['_sa_instance_state']
-	#	color_json['color'].append(color_info)
-	#print(color_json)
-	#return jsonify(color_json)
+	x = 0
 	for movie in movies:
+		x=x +1
 		movie_info = movie.__dict__
 		del movie_info['_sa_instance_state']
-		movies_json['movie'].append(movie_info)
+		movies_json['movies'].append(movie_info)
+	print(x)
 	return jsonify(movies_json)
 
 if __name__ == "__main__":
