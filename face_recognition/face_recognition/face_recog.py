@@ -3,6 +3,7 @@ import cv2
 import json
 import imutils
 import psycopg2
+import numpy as np
 import face_recognition
 
 ###########
@@ -28,64 +29,58 @@ actors_file = 'actors.json'
 # connect to DB
 cur = conn.cursor()
 
-# set up list of face encodings
-known_actor_encodings = []
-known_actor_nconsts = []
+# get list of face encodings from DB, convert from json to list
+cur.execute('SELECT face_encoding from actors')
+db_face_encodings = cur.fetchall()
+db_face_encodings = list(db_face_encodings)
 
-# populate actors path
-actors = os.listdir(actors_dir)
-actors_paths = [os.path.join(actors_dir, f) for f in actors if f.endswith("jpg")]
+# set up know face encodings array
+known_face_encodings = []
 
-# get number of actors
-actors_length = len(actors_paths)
-
-# process actor images
-for i, path in enumerate(actors_paths):
-  # load actor image into numpy array
-  actor = face_recognition.load_image_file(path)
-
-  # get face encoding, push to array
-  actor = face_recognition.face_encodings(actor)[0]
-  known_actor_encodings.append(actor)
+# process all tuple face encodings from db
+for i, face_encoding in enumerate(db_face_encodings):
+  # turn into properly formatted numpy array
+  face_encoding = list(face_encoding[0])
+  face_encoding = np.array(face_encoding)
   
-  # get nconst, push to array
-  nconst = path.replace(f'{actors_dir}/', '').replace('.jpg', '')
-  known_actor_nconsts.append(nconst)
+  # convert face_encoding to numpy array
+  face_encoding = np.array(face_encoding)
+  
+  # add to known face encodings array
+  known_face_encodings.append(face_encoding)
 
-  # notify user
-  print(f'[PROG] {nconst} - {i + 1} of {actors_length} processed')
+# get list of nconsts from DB
+cur.execute('SELECT name from actors')
+known_face_names = cur.fetchall()
 
 # populate posters path
 posters = os.listdir(posters_dir)
 posters_paths = [os.path.join(posters_dir, f) for f in posters if f.endswith("jpg")]
 
-# get number of posters
-posters_length = len(posters_paths)
-
 # process poster images
 for i, path in enumerate(posters_paths):
-  # scale down poster for processing
-  poster = cv2.imread(path, 0)
-  poster = imutils.resize(poster, height=1000)
+    # scale down poster for processing
+    poster = cv2.imread(path, 0)
+    poster = imutils.resize(poster, height=1000)
 
-  # temporarily write poster to disk
-  cv2.imwrite('temp.jpg', poster)
+    # temporarily write poster to disk
+    cv2.imwrite('temp.jpg', poster)
 
-  # load poster
-  poster = face_recognition.load_image_file('temp.jpg')
+    # load poster
+    poster = face_recognition.load_image_file('temp.jpg')
 
-  # find faces and encodings in the poster
-  face_locations = face_recognition.face_locations(poster, number_of_times_to_upsample=1, model='cnn')
-  face_encodings = face_recognition.face_encodings(poster, face_locations)
-  
-  # process each face found in poster
-  for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
-    # find matches for known faces
-    matches = face_recognition.compare_faces(known_actor_encodings, face_encoding)
-    
-    if True in matches:
-      first_match_index = matches.index(True)
-      name = known_actor_nconsts[first_match_index]
-      print(f'{path} - {name}')
-    else:
-      print(f'{path} - no matches')
+    # find faces in poster
+    face_locations = face_recognition.face_locations(poster)
+    face_encodings = face_recognition.face_encodings(poster, face_locations, num_jitters=10)
+
+    for (top, right, bottom, left), face_encoding in zip(face_locations, face_encodings):
+      matches = face_recognition.compare_faces(known_face_encodings, face_encoding)
+
+      face_distances = face_recognition.face_distance(known_face_encodings, face_encoding)
+      
+      best_match_index = np.argmin(face_distances)
+      if matches[best_match_index]:
+        name = known_face_names[best_match_index][0]
+        print(name, path)
+      else:
+        print(path)
