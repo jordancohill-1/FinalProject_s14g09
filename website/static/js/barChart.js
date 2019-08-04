@@ -3,24 +3,25 @@
 // IIFE
 (function() {
     // Init Data
-    let data = [];
+    let color_data = [];
  
-    // Fetch json data
-    let promise = d3.json('/load_data', (d) => {
-         
+    // Fetch color json data
+    let promise = d3.json('/load_color_data', (d) => { 
+    
             return d;
+    
     }).then((d) => {
         
-        data = d['movies'];
-        
+        color_data = d['colors'];
+        //console.log("color_data for barchart:", color_data);
         // Delegate to createVis
-            createVis();
+        createVis();
+   
     }).catch((err) => {
              
       console.error(err);
                      
     })
-
 
     /*
      Function :: createVis()
@@ -40,20 +41,15 @@
             .attr('class', 'container')
             .style('transform', `translate(${margin.left}px, ${margin.top}px)`);
 
-         //Todo: This will need to be extracted from the data once we have the file.
-        //const colors = ["red", "blue", "green", "orange", "brown", "black"];
+        //Extract the color names from the entire data set
         const dataset=[];
-
-        for (var i = 0; i < data.length; i++) { 
-            dataset[i] = [data[i].dominant_color_name, Math.floor(Math.random()*300000000)];
+        for (var i = 0; i < color_data.length; i++) { 
+            dataset[i] = [color_data[i].dominant_color_name];
         }
-        /*for (var i = 0; i < 1000; i++) { 
-            dataset[i] = [random_item(colors), Math.floor(Math.random()*300000000)];
-        }*/
         
         //Extract colors from dataset
         const colorsArray = [];
-        var color_found=false;
+        var color_found = false;
         for (var i = 0; i < dataset.length; i++) {
             color_found = false;
             for (var j=0; j < colorsArray.length; j++) {
@@ -157,10 +153,10 @@
             .text('Age');*/
     }
 
-    function random_item(items)
+    /*function random_item(items)
     {  
         return items[Math.floor(Math.random()*items.length)];
-    }
+    }*/
 
     function get_color_index(color, colorArray) {
         for (var i = 0; i<colorArray.length; i++) {
@@ -202,7 +198,6 @@
         text.append("tspan")
             .text(d => d.num)
             .attr('class', 'scaled_num') //Tot: Why isn't the font-size being reflected from the CSS file
-//            .attr("font-family", "sans-serif")
             .attr("font-size", "36px");
 
         // Add a <tspan class="author"> for every data element.
@@ -212,7 +207,6 @@
             .attr("x", 0)
             .attr("dx", 0)
             .attr("dy", 25)
-            //.attr("font-family", "sans-serif")
             .attr("font-size", "18px");
     }
 })();

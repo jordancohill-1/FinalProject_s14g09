@@ -3,18 +3,35 @@
 // IIFE
 (function() {
     // Init Data
-    let data = [];
+    let color_data = [];
+    let movie_data = [];
  
-    // Fetch json data
-    let promise = d3.json('/load_data', (d) => {
-         
+    // Fetch color json data
+    let promise = d3.json('/load_color_data', (d) => { 
+    
             return d;
+    
     }).then((d) => {
         
-        data = d['movies'];
+        color_data = d['colors'];
+        //Now get the mopvie data
+        let promise = d3.json('/load_movie_data', (d) => { 
+    
+                return d;
         
-        // Delegate to createVis
+        }).then((d) => {
+            
+            movie_data = d['movies'];
+            //console.log("color_data for barchart:", color_data);
+            // Delegate to createVis
             createVis();
+       
+        }).catch((err) => {
+                 
+          console.error(err);
+                         
+        })
+   
     }).catch((err) => {
              
       console.error(err);
@@ -44,41 +61,42 @@
             .style('transform', `translate(${margin.left}px, ${margin.top}px)`);
 
         //Todo: This will need to be extracted from the data once we have the file.
-        const colors = ["red", "blue", "green", "orange", "brown", "black"];
-        const color_dataset=[];
+        //const colors = ["red", "blue", "green", "orange", "brown", "black"];
+        const dataset=[];
 
         for (var i = 0; i < color_data.length; i++) { 
-            color_dataset[i] = [color_data[i].dominant_color_name, Math.floor(Math.random()*300000000)];
+//            color_dataset[i] = [color_data[i].dominant_color_name, Math.floor(Math.random()*300000000)];
+            dataset[i] = [color_data[i].dominant_color_name, movie_data[i].imdb_score];
         }
-        //console.log(dataset);
+        console.log(dataset);
 
         //Extract colors from dataset
         const colorRects = [];
         var color_found=false;
-        for (var i = 0; i < color_dataset.length; i++) {
+        for (var i = 0; i < dataset.length; i++) {
             color_found = false;
             for (var j=0; j < colorRects.length; j++) {
-                if (color_dataset[i][0] == colorRects[j]) {
+                if (dataset[i][0] == colorRects[j]) {
                     color_found = true;
                     break;
                 }
             }
             if(color_found == false) {
-                colorRects[colorRects.length]= color_dataset[i][0];
+                colorRects[colorRects.length]= dataset[i][0];
             }
         }
         console.log(colorRects);
 
         //x Scale
         const scX = d3.scaleLinear()
-            .domain(d3.extent(color_dataset, (d) => {
+            .domain(d3.extent(dataset, (d) => {
                 return d[1];
             }))
             .range([0, plot_dx]);
 
         //y Scale
         const scY = d3.scaleLinear()
-            .domain([0, color_dataset.length])
+            .domain([0, dataset.length])
             .range([0, plot_dy]);
 
         //Handle Axis
@@ -123,7 +141,7 @@
         */
 
         container.selectAll("#dataLine")
-            .data(color_dataset)
+            .data(dataset)
             .enter()
             .append("rect")
             .attr("x", function(d,i) {

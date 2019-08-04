@@ -43,14 +43,36 @@ def upload():
 @app.route('/load_data', methods=['GET'])
 def load_data():
 	movies_json = {'movies': []}
-	movies = db.session.query(Movie, Color).all()
-	print(movies)
+	movies = db.session.query(Movie, Color).join(Color).all()
+	#colors = db.session.query(Color).join(Movie).all()
+	#print(movies)
+	for movie in movies:
+		#print(movie.index)
+		movie_info = movie.__dict__
+		del movie_info['_sa_instance_state']
+		movies_json['movies'].append(movie_info)
+	#print(movies_json)
+	return jsonify(movies_json)
+
+@app.route('/load_color_data', methods=['GET'])
+def load_color_data():
+	colors_json = {'colors': []}
+	colors = db.session.query(Color).join(Movie).all()
+	for color in colors:
+		color_info = color.__dict__
+		del color_info['_sa_instance_state']
+		colors_json['colors'].append(color_info)
+	return jsonify(colors_json)
+
+@app.route('/load_movie_data', methods=['GET'])
+def load_movie_data():
+	movies_json = {'movies': []}
+	movies = db.session.query(Movie).join(Color).all()
 	for movie in movies:
 		movie_info = movie.__dict__
 		del movie_info['_sa_instance_state']
 		movies_json['movies'].append(movie_info)
-	print(movies_json)
-	return jsonify(movies)
+	return jsonify(movies_json)
 
 if __name__ == "__main__":
   app.run(debug=True)
