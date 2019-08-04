@@ -43,13 +43,14 @@ def upload():
 @app.route('/load_data', methods=['GET'])
 def load_data():
 	movies_json = {'movies': []}
-	movies = db.session.query(Movie).join(Color).all()
+	movies = db.session.query(Movie, Color)
+	print(movies)
 	for movie in movies:
 		movie_info = movie.__dict__
 		del movie_info['_sa_instance_state']
 		movies_json['movies'].append(movie_info)
-	print(len(movies))
-	return jsonify(movies_json)
+	print(movies_json)
+	return jsonify(movies)
 
 if __name__ == "__main__":
   app.run(debug=True)
