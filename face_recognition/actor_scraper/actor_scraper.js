@@ -1,6 +1,7 @@
 /*
 *
-* Extracts the nconst of each actor in the top 1000 imdb page
+* Actor Scraper
+* Extracts actor info from top 1000 imdb page
 * Author: Phillip T.
 *
 */
@@ -12,7 +13,7 @@
 const baseUrl = 'https://www.imdb.com/list/ls058011111/'
 const totalPages = 10
 const actorsPerPage = 100
-const nconstFile = 'nconsts/nconsts.json'
+const actorsFile = 'actors/actors.json'
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -20,50 +21,60 @@ const rp = require('request-promise')
 const $ = require('cheerio')
 const fs = require('fs')
 
-let nconsts = []
+let actors = []
 let operationsCompleted = 0;
 let totalActors = totalPages * actorsPerPage;
 
 const main = () => {
-  console.log("[INIT] scraping nconsts...")
-  getNconsts()
+  console.log("[INIT] scraping actors...")
+  getActors()
 }
 
-// extract nconst of each actor
-const getNconsts = () => {
+// get actor info
+const getActors = () => {
   // loop through all pages of the list
   for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
     // format url for extration
     let url = `${baseUrl}?page=${pageNumber}`
     
-    // extract nconst for each actor
+    // extract actor info for each page
     rp(url)
     .then(function(html){
       for (let i = 0; i < actorsPerPage; i++) {
-        // scrape actor link and extract nconst to array
-        nconsts.push($('.lister-item-image > a', html)[i].attribs.href
-        .replace('/name/', '').replace('/?ref_=nmls_pst', ''))
+        // create actor object
+        let actor = {}
+
+        // extract nconst, add to object
+        actor['nconst'] = $('.lister-item-image > a', html)[i].attribs.href
+        .replace('/name/', '').replace('/?ref_=nmls_pst', '')
+
+        // extract name, add to object
+        actor['name'] = $('.lister-item-header a', html).eq(i).text().trim()
+
+        // push object to array
+        actors.push(actor)
 
         // increment operations counter
         operation()
       }
+
       // display progress to user
-      console.log(`[PROG] ${nconsts.length} of ${totalActors} downloaded`)
+      console.log(`[PROG] ${actors.length} of ${totalActors} processed`)
     })
   }
 }
 
-// save nconsts to JSON file
-const saveNconsts = () => {
-  // convert nconsts to json
-  const json = JSON.stringify(nconsts)
+// save actors to JSON file
+const saveActors = () => {
+  // convert actors to json
+  const json = JSON.stringify(actors)
 
   // write to file
-  fs.writeFileSync(nconstFile, json)
+  fs.writeFileSync(actorsFile, json)
 
   // notify user
-  console.log('[DONE] nconsts written to file', nconstFile)
-  console.log(nconsts.length)
+  console.log('[DONE] actors written to file', actorsFile)
+  console.log(actors.length)
 }
 
 // when getNconsts done, run SaveNconsts
@@ -72,8 +83,8 @@ const operation = () => {
   // increment operations counter
   operationsCompleted++
 
-  // once all nconsts are scraped, run SaveNConsts
-  if (operationsCompleted === totalActors) saveNconsts(nconsts)
+  // once all actors are scraped, run saveActors
+  if (operationsCompleted === totalActors) saveActors(actors)
 }
 
 main()

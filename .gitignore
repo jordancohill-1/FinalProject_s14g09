@@ -11,5 +11,7 @@ face_detection/env
 face_recognition/actor_scraper/faces
 face_recognition/actor_scraper/env
 face_recognition/face_recognition/faces
-face_recognition/face_recognition/env
+face_recognition/face_recognition/
+face_recognition/image_scraper/env
+face_recognition/actor_scraper/node_modules
 .DS_Store
