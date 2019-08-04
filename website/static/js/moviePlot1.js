@@ -6,7 +6,7 @@
     let color_data = [];
     let movie_data = [];
  
-    // Fetch color json data
+    // Fetch color data
     let promise = d3.json('/load_color_data', (d) => { 
     
             return d;
@@ -14,7 +14,8 @@
     }).then((d) => {
         
         color_data = d['colors'];
-        //Now get the mopvie data
+        
+        //Now get the movie data
         let promise = d3.json('/load_movie_data', (d) => { 
     
                 return d;
@@ -22,7 +23,7 @@
         }).then((d) => {
             
             movie_data = d['movies'];
-            //console.log("color_data for barchart:", color_data);
+            
             // Delegate to createVis
             createVis();
        
@@ -44,7 +45,7 @@
     function createVis() {
 
         // Get svg
-        const svg = d3.select('#moviePlot1');
+        const svg = d3.select('#moviePlot');
 
         //Config
         const labels_font_size = 16;
@@ -60,15 +61,31 @@
             .attr('class', 'container')
             .style('transform', `translate(${margin.left}px, ${margin.top}px)`);
 
-        //Todo: This will need to be extracted from the data once we have the file.
-        //const colors = ["red", "blue", "green", "orange", "brown", "black"];
+        //Extract the dominant colors and imdb scores
         const dataset=[];
-
         for (var i = 0; i < color_data.length; i++) { 
-//            color_dataset[i] = [color_data[i].dominant_color_name, Math.floor(Math.random()*300000000)];
             dataset[i] = [color_data[i].dominant_color_name, movie_data[i].imdb_score];
         }
         console.log(dataset);
+
+        //Find unique colors and scores and increment a value 
+        const new_dataset =[];
+        var data_duplicate=false;
+        for (var i = 0; i < dataset.length; i++) { 
+            data_duplicate = false;
+            for (var j = 0; j < new_dataset.length; j++) { 
+                if ((dataset[i][0] == new_dataset[j][0]) && (dataset[i][1] == new_dataset[j][1])) {
+                    new_dataset[j][2] += 1;
+                    data_duplicate = true;
+                    break;
+                }
+            }
+            if(data_duplicate == false) {
+                new_dataset[new_dataset.length] = [dataset[i][0], dataset[i][1], 1];
+            }
+        }
+        console.log(new_dataset);
+
 
         //Extract colors from dataset
         const colorRects = [];
@@ -89,14 +106,14 @@
 
         //x Scale
         const scX = d3.scaleLinear()
-            .domain(d3.extent(dataset, (d) => {
+            .domain(d3.extent(new_dataset, (d) => {
                 return d[1];
             }))
             .range([0, plot_dx]);
 
         //y Scale
         const scY = d3.scaleLinear()
-            .domain([0, dataset.length])
+            .domain([0, new_dataset.length])
             .range([0, plot_dy]);
 
         //Handle Axis
@@ -141,7 +158,7 @@
         */
 
         container.selectAll("#dataLine")
-            .data(dataset)
+            .data(new_dataset)
             .enter()
             .append("rect")
             .attr("x", function(d,i) {
@@ -151,10 +168,23 @@
                 var y = colorRects.indexOf(d[0]);
                 return 5+y*25;
             })
-            .attr("width", 2)
+            .attr("width", function(d) {
+                
+                return d[2];
+            })
             .attr("height", 20)
             .attr("fill", function(d) {
                 return d[0];
+            })
+            .attr("stroke", "rgba(150,150,150,0.7)")
+            .attr("stroke-width", function(d) {
+                if(d[0] == "white") {
+                    return 1;
+                }
+                else {
+                    return 0;
+                }
+                print
             })
             .attr("id", "dataLine");
 
