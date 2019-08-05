@@ -25,7 +25,7 @@ class Face(db.Model):
 
 class Actor(db.Model):
   __tablename__ = 'actors'
-  face_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  actor_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   name = db.Column(db.String(64), nullable=False)
   nconst = db.Column(db.String(64), nullable=False)
   face_filename = db.Column(db.String(1000), nullable=False)
