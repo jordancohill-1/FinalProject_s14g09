@@ -18,7 +18,7 @@ document.addEventListener('swup:contentReplaced', function () {
     $.getScript({url: 'https://d3js.org/d3.v5.min.js', cache: false}, function () {
       $.getScript({url: '/static/js/barChart.js', cache: false});
       $.getScript({url: '/static/js/moviePlot1.js', cache: false});
-      $.getScript({url: '/static/js/sunburstChart.js', cache: false});
+      $.getScript({url: '/static/js/scatterChart.js', cache: false});
     });
   }
 });
