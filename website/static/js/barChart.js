@@ -24,6 +24,30 @@
     })
 
     /*
+        Function :: generateColors()
+    */
+
+   const colors = [{'color': 'black', 'value': '#1A202C'},
+                   {'color': 'gray', 'value': '#A0AEC0'},
+                   {'color': 'brown', 'value': '#7B341E'},
+                   {'color': 'green', 'value': '#48BB78'},
+                   {'color': 'blue', 'value': '#4299E1'},
+                   {'color': 'purple', 'value': '#9F7AEA'},
+                   {'color': 'white', 'value': '#FFFFFF'},
+                   {'color': 'yellow', 'value': '#F6E05E'},
+                   {'color': 'red', 'value': '#E53E3E'},
+                   {'color': 'pink', 'value': '#FEB2B2'},
+                   {'color': 'orange', 'value': '#F6AD55'}]
+
+    function generateColors(colorsArray, i) {
+        for (let k = 0; k < colors.length; k++) {
+            if (colorsArray[i] == colors[k].color) {
+                return colors[k].value
+            }
+        }
+    }
+
+    /*
      Function :: createVis()
      */
     function createVis() {
@@ -65,8 +89,8 @@
         
 
         //Print the statistics
-        printScaledNum('#moviesAnalyzed', dataset.length, "movies analyzed");
-        printScaledNum('#dominantColors', colorsArray.length, "dominant colors");
+        printScaledNum('#moviesAnalyzed', dataset.length, "MOVIES ANALYZED");
+        printScaledNum('#dominantColors', colorsArray.length, "DOMINANT COLORS");
 
         const colorMap = [];
         for (var i = 0; i < dataset.length; i++) { 
@@ -118,8 +142,17 @@
                 return scY(d.length);
             })
             .attr('fill', function (d,i) {
-                return colorsArray[i];
+                return generateColors(colorsArray, i);
             })
+            .attr('stroke', '#1A202C')
+            .attr('stroke-width', function(d, i) {
+                if (colorsArray[i] == "white") {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            })
+            .attr('shape-rendering', 'crispEdges')
             .on('mouseover', function () {
                 d3.select(this)
                     .attr('opacity' , 0.8);
@@ -198,7 +231,8 @@
         text.append("tspan")
             .text(d => d.num)
             .attr('class', 'scaled_num') //Tot: Why isn't the font-size being reflected from the CSS file
-            .attr("font-size", "36px");
+            .attr("font-size", "36px")
+            .attr("font-weight", 700);
 
         // Add a <tspan class="author"> for every data element.
         text.append("tspan")
@@ -209,4 +243,5 @@
             .attr("dy", 25)
             .attr("font-size", "18px");
     }
+
 })();
