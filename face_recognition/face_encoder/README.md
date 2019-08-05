@@ -5,6 +5,8 @@
 Generates face encodings from image and creates DB entry with related actor
 information.
 
+[Google Colab Link](https://colab.research.google.com/drive/1T_Su2-8n3icz2TQ62oyKiwH8f1Iyawhg)
+
 ## Package Requirements
 
 - psycopg2
