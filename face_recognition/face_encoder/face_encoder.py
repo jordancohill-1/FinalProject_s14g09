@@ -64,24 +64,24 @@ for i, path in enumerate(faces_paths):
 
   # continue if encoding returns results
   if 0 < len(encoding):
-    # get encoding, nconst, filename
+    # get encoding
     encoding = json.dumps(list(encoding[0]))
-    nconst = path.replace(f'{faces_dir}/', '').replace('.jpg', '')
-    filename = path.replace(f'{faces_dir}/', '')
 
     # find corresponding actor in json file
     for k, actor in enumerate(actors):
       if nconst == actor['nconst']:
-        # get actor name
+        # get actor name, nconst, filename
         name = actor['name']
+        nconst = actor['nconst']
+        filename = actor['filename']
 
     # create DB entry
     cur.execute("""INSERT INTO actors (name, nconst, face_filename, face_encoding)
                 VALUES(%s, %s, %s, %s)""", (name, nconst, filename, encoding))
     conn.commit()
 
-    # notify user
-    print(f'[PROG] {nconst} - {i + 1} of {faces_length} processed')
+  # notify user
+  print(f'[PROG] {nconst} - {i + 1} of {faces_length} processed')
 
 cur.close()
 conn.close()

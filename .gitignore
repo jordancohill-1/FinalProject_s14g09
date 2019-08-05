@@ -15,4 +15,6 @@ face_recognition/actor_scraper/node_modules
 face_recognition/image_scraper/faces
 face_recognition/image_scraper/old_faces
 face_recognition/image_scraper/env
+face_recognition/face_encoder/env
+face_recognition/face_encoder/faces
 .DS_Store
