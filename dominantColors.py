@@ -16,6 +16,7 @@ from sklearn.cluster import MiniBatchKMeans, KMeans
 from pathlib import Path
 from PIL import Image
 from colorthief import ColorThief
+from sklearn.cluster import MiniBatchKMeans
 import numpy as np
 import pandas as pd
 import os

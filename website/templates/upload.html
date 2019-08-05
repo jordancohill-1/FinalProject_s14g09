@@ -17,15 +17,14 @@
     <div class="col">
       <h2>Upload Image</h2>
       <p>Test drive our algorithm by uploading your own image.</p>
-      <form>
+      <form id="upload_form" action="/upload" method="POST" enctype="multipart/form-data">
         <div class="input-group mb-3">
           <div class="custom-file">
-            <input type="file" name="file" autocomplete="off" required>
-           <!-- <input type="file" class="custom-file-input" id="poster">-->
-            <label id="posterLabel" class="custom-file-label" for="moviePoster">upload poster...</label>
-          </div>
-          <input type="submit" value="Submit">
+            <input type="file" name="image" class="custom-file-input" id="poster">
+            <label id="posterLabel" class="custom-file-label" for="poster">upload poster...</label>
+          </div> 
         </div>
+        <button type="submit" class="btn btn-primary">Upload poster</button>
       </form>
     </div>
   </div>
