@@ -29,4 +29,4 @@ class Actor(db.Model):
   name = db.Column(db.String(64), nullable=False)
   nconst = db.Column(db.String(64), nullable=False)
   face_filename = db.Column(db.String(1000), nullable=False)
-  face_encoding db.Column(nullable=False)
+  face_encoding = db.Column(nullable=False)
