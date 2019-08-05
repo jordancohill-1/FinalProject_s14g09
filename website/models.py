@@ -22,3 +22,11 @@ class Face(db.Model):
   face_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
   movie = db.Column(db.Integer, db.ForeignKey('movies.movie_id'), nullable=False)
   num_faces = db.Column(db.Integer, nullable=False)
+
+class Actor(db.Model):
+  __tablename__ = 'actors'
+  face_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+  name = db.Column(db.String(64), nullable=False)
+  nconst = db.Column(db.String(64), nullable=False)
+  face_filename = db.Column(db.String(1000), nullable=False)
+  face_encoding db.Column(nullable=False)
