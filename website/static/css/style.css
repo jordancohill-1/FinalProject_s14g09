@@ -233,3 +233,12 @@ html.is-animating .transition-fade {
   transition: opacity 0.3s cubic-bezier(0.35, 0.055, 0.675, 0.19),
               transform 0.3s cubic-bezier(0.35, 0.055, 0.675, 0.19);
 }
+
+/*Scatterplot circles */
+.brushed {
+    opacity: 0.5;
+}
+
+.non_brushed {
+    opacity: 1.0;
+}
