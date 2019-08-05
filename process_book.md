@@ -42,33 +42,6 @@ created using the 4 dominant colors of each poster.
 Next, I plan to extract the dominant colors from the quantized images so that we can make 
 predictions on what colors lead to better ratings/or sales.
 
-### Facial Recognition (Phillip Tran)
-
-#### Actor Scraping
-
-Using a simple Node script I was able to extract the nconst identifiers and
-names of the [top 1000 actors on IMDB](https://www.imdb.com/list/ls058011111/).
-This ensures that we have the most relevant set of actors to identify trends
-with.
-
-#### Image Scraping
-
-Originally, I was using a script to scrape each actor's headshot picture from
-IMDB to use for my face recognition feature. The lack of data resulted in low
-accuracy and many false positives.
-
-To combat this, I created an image scraper to take the first 20 photos of each
-actor on Google Images and process them. This gives us a lot more data to
-identify actors with.
-
-#### Face Recognition
-
-I found the [face_recognition](https://github.com/ageitgey/face_recognition) 
-library to be an accurate Python library for facial recognition. It works quite
-well with eyewear and partially obscured faces.
-
-WIP
-
 ### Dominant Colors (Jordan Cohill)
 Using the results of the quantized images, the dominant color of each image was
 evaluated using the ColorThief library, which returns an RGB value for each image.
@@ -102,6 +75,84 @@ general colors:
 - White
 - Gray
 - Black
+
+### Facial Detection (Phillip Tran)
+
+With the use of the [face_recognition](https://github.com/ageitgey/face_recognition)
+library I created a facial detection script. The script counts the number of
+faces in a given movie poster and adds a corresponding entry to the database.
+
+The library uses Dlib's CNN facial recognition model. I've configured it to
+upsample each poster twice in order to find smaller faces.
+
+I ran the script using [Google Colab](https://colab.research.google.com/drive/1VFrcniIjjWdVoouzlqKBsgxjQGazubgT).
+This allowed me to process the data using a GPU, which is much quicker than
+using my local machine.
+
+After running it through Colab, I discovered that I ran out of vRAM about 1000
+images in. To deal with this I downscaled each image to 1000px in height
+(preserving aspect ratio) and configured the library to upscale the image twice.
+
+With this change I was able to process all of the data without coming across
+hardware limits while maintaining similar accuracy.
+
+### Facial Recognition (Phillip Tran)
+
+#### Actor Scraping
+
+Using a Node script I was able to extract the nconst identifiers and names of
+the [top 100 actors on IMDB](https://www.imdb.com/list/ls000972065/).
+This ensures that we have the most relevant set of actors to identify trends
+with. The extracted information is written to `actors.json`.
+
+I originally planned to use the [top 1000 actors on IMDB](https://www.imdb.com/list/ls058011111/)
+but I was getting far too many false identifications while running my facial
+recognition. By reducing the number of faces that must be identified, I make it
+easier for the facial recognition to make a correct guess.
+
+I had originally planned to write the majority of my data scraping and
+processing components in Node but I soon found that Python was a much more
+comfortable environment for me.
+
+#### Image Scraping
+
+A simple python script takes each actor in `actors.json`, downloads their image
+from IMDB, and adds relevant information (filename) to a new `actors.json` file.
+I leveraged the BeautifulSoup library for webcrawling and the Pillow library for
+downloading the image.
+
+#### Face Encoder
+
+This python script processed each of the face images using the
+[face_recognition](https://github.com/ageitgey/face_recognition) library, which
+leverages dlib's face recongition. It creates a encoding, or a 128-dimensional vector, that represents each actor's face. After processing each face, a
+database entry containing the encoding and related actor information is made.
+
+To make the encoder more accurate, I applied an option called `num_jitter=100`.
+This makes dlib randomly distort the image 100 times, encode each version, and
+take the average result of the collective encodings. The only downside to this
+is it takes longer to process each face. By leveraging Google Collab, however,
+processing these images was relatively speedy.
+
+#### Face Recognition
+
+I used the [face_recognition](https://github.com/ageitgey/face_recognition)
+library for my facial recognition component. It a popular Python library, comes
+pretrained, and is fairly accurate provided that you tweak the parameters.
+
+The script gets a list of actors and their face encodings from the database and
+processes each poster for faces. First, it identifies where faces are located in
+the poster in the same fashion as the face detection script. Then, it generates
+an encoding of each face and compares it to known faces in the database to find
+matches. Once it finds potential matches, the euclidian distance of each of the
+potential matches to the unkown face is compared. The face with the smallest
+distance is then selected as the best match. Finally, a database entry
+associating the matching actor to the movie is generated.
+
+A curious issue I noticed with the library is that it often mistakes children
+for a known face. By setting the `tolerance` option to `0.5` from the default
+`0.6` on the `compare_faces` function, I was able to reduce these false
+positives.
 
 ### Flask App
 
@@ -155,23 +206,3 @@ Lastly, the output from the dominant colors process was loaded to the Colors
 table by repeating the psycopg2 steps above and then using Pandas read_csv.
 Linking these tables is still in process but will be done by adding a foreign 
 key to the Colors table that references the unique ID from the movies table.
-
-### Facial Detection (Phillip Tran)
-
-With the use of the [face_recognition](https://github.com/ageitgey/face_recognition)
-library I created a facial detection script. The script counts the number of
-faces in a given movie poster and adds a corresponding entry to the database.
-
-The library uses Dlib's CNN facial recognition model. I've configured it to
-upsample each poster once in order to find smaller faces.
-
-I ran the script using [Google Colab](https://colab.research.google.com/drive/1VFrcniIjjWdVoouzlqKBsgxjQGazubgT).
-This allowed me to process the data using a GPU, which is much quicker than
-using my local machine.
-
-After running it through Colab, I discovered that I ran out of vRAM about 1000
-images in. To deal with this I downscaled each image to 1000px in height
-(preserving aspect ratio) and configured the library to upscale the image twice.
-
-With this change I was able to process all of the data without coming across
-hardware limits while maintaining similar accuracy.
