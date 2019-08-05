@@ -10,10 +10,11 @@
 // OPTIONS //
 /////////////
 
-const baseUrl = 'https://www.imdb.com/list/ls058011111/'
-const totalPages = 10
+//const baseUrl = 'https://www.imdb.com/list/ls058011111/'
+const baseUrl = 'https://www.imdb.com/list/ls000972065/'
+const totalPages = 1
 const actorsPerPage = 100
-const actorsFile = 'actors/actors.json'
+const actorsFile = 'actors_file/actors.json'
 
 ////////////////////////////////////////////////////////////////////////////////
 

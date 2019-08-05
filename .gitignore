@@ -1,5 +1,4 @@
 .directory
-face_recognition/db_actor_filter/env
 website/env
 website/__pycache__
 website/.vscode
@@ -7,9 +6,13 @@ website/routes.pyc
 full/
 face_detection/env
 .vscode/
-face_recognition/actor_scraper/node_modules
+face_recognition/face_recognition/old_faces
 face_recognition/face_recognition/faces
-face_recognition/face_recognition/
-face_recognition/image_scraper/env
+face_recognition/face_recognition/env
+face_recognition/face_recognition/__pycache__
+face_recognition/face_recognition/temp.jpg
+face_recognition/actor_scraper/node_modules
 face_recognition/image_scraper/faces
+face_recognition/image_scraper/old_faces
+face_recognition/image_scraper/env
 .DS_Store

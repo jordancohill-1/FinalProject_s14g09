@@ -1,6 +1,6 @@
 #
-# Image Scraper
-# Scrapes Google Images for actors
+# Actor Scraper
+# Scrapes actor images, creates json file of actor info
 # Author: Phillip T.
 #
 
@@ -8,43 +8,70 @@
 # OPTIONS #
 ###########
 
-actors_json = 'actors/actors.json'
-faces_dir = 'faces'
-img_format = 'jpg'
-img_limit = 20
+base_url = 'https://www.imdb.com/name/'
+nconsts_file = 'actors/actors.json'
+json_dest = 'actors.json'
+img_dest = 'faces'
 
-######################################################
+################################################################################
 
+import urllib.request
+import requests
 import json
 
-from google_images_download import google_images_download
+from bs4 import BeautifulSoup
+from requests import get
+from PIL import Image
 
-# load actors json
-with open(actors_json) as json_file:
-  actors = json.load(json_file)
+# set up actors list
+actors = []
 
-# get length of actors
-actors_length = len(actors)
+# load nconsts file
+with open(nconsts_file) as json_file:
+  nconsts = json.load(json_file)
 
-# init download lib
-response = google_images_download.googleimagesdownload()
+# remove duplicates
+#nconsts = list(set(nconsts))
 
-# set up image scraper args
-arguments = {'keywords': '',
-             'output_directory': faces_dir,
-             'image_directory': '',
-             'limit': img_limit,
-             'format': img_format,
-             'silent_mode': True}
+# find length of nconsts list
+nconsts_length = len(nconsts)
 
-# process actors
-for i, actor in enumerate(actors):
-  # set up search arg, image dir name
-  arguments['keywords'] = f'{actor["name"]} headshot'
-  arguments['image_directory'] = f'{actor["nconst"]}'
+# loop through nconsts
+for index, nconst in enumerate(nconsts):
+  # construct actor URL, filename, and image path
+  actor_url = base_url + nconst['nconst']
+  filename = f'{nconst["nconst"]}.jpg'
+  img_path = f'{img_dest}/{filename}'
+  
+  # obtain response from page
+  response = get(actor_url)
+  
+  # parse HTML text
+  html = BeautifulSoup(response.text, 'html.parser')
+  
+  # find actor div
+  actor_div = html.find('div', {'id': 'name-overview-widget'})
+  
+  # extract actor name and image URL
+  actor_name = actor_div.h1.span.text
+  img_url = actor_div.find('img', {'id': 'name-poster'})['src']
+  
+  # create actor dictonary and add to actors to list
+  actor = { 'nconst': nconst['nconst'],
+            'name': actor_name,
+            'filename': filename }
+  actors.append(actor)
 
-  # download images with args
-  response.download(arguments)
-
+  # download and store image
+  r = requests.get(img_url, stream = True)
+  i = Image.open(r.raw)
+  i.save(img_path)
+  
   # notify user
-  print(f'[PROG] {actor["name"]} - {i + 1} of {actors_length} processed')
+  print(f'[PROG] {nconst["nconst"]} - {index + 1} of {nconsts_length} actors processed')
+
+# write actor info to json file
+with open(json_dest, 'w') as outfile:
+  json.dump(actors, outfile)
+
+print('[DONE] All actors processed')
