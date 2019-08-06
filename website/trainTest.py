@@ -6,6 +6,7 @@ from sklearn.tree import DecisionTreeRegressor
 from routes import dataset
 import numpy as np
 import pandas as pd
+import json
 
 destination = "results.csv"
 
@@ -33,13 +34,10 @@ def predict(color):
 	# Outcome prediction, score
 	score = regr.score(colors_test, scores_test)
 	score_dtr = regr_dtr.score(colors_test, scores_test)
-	print(score)
-	print(score_dtr)
 
 
 	#fill array for encoded colors 
 	index = colors.columns.get_loc(color)
-	print(index)
 	x=[]
 	for i in range(0, 12):
 		if(i == index):
@@ -50,8 +48,6 @@ def predict(color):
 
 	#prediction
 	score_predict = regr.predict([x])
-	print(score_predict)
-
-
-
-
+ 
+	results = { 'score_predict': round(score_predict.tolist()[0], 2) }
+	return results

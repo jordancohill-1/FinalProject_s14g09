@@ -1,41 +1,90 @@
 {% extends "layouts/default.html" %}
 {% block content %}
 
-    <div class="container">
+{% if results is defined %}
+    <div class="container container-wide">
       <div class="row">
         <div class="col">
-          <h2>UPLOAD RESULTS</h2>
+          <h1>RESULTS</h1>
           <p>
-            
+            Our machine learning algorithms have done their work. View information below.
+          </p>
+          <hr class="hr-dotted">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <h2>Color Quantization</h2>
+          <p>
+            Color quantization finds the most prevalent color in movie posters.
+            A quantization process creates a copy of the original poster with
+            the 4 dominant colors. A second process uses this image to find the
+            most prevalant color. With a linear regression model and a decision
+            tree regressor, a predicted IMDB score has been generated.
           </p>
         </div>
       </div>
-     <div class="row">
-        <div class="col-sm-4">
+      <div class="row">
+        <div class="col-md-4">
           <h3>ORIGINAL</h3>
-          <img src="../../original.jpg"
+          <img src="{{url_for('static', filename='images/uploads/original.jpg')}}"
           class="img-fluid">
         </div>
-        <div class="col-sm-4">
-          <span>&#8594;</span>
-        </div>
-        <div class="col-sm-4">
+        <div class="col-md-4">
           <h3>QUANTIZED</h3>
-          <img src="../../quant.jpg"
+          <img src="{{url_for('static', filename='images/uploads/quant.jpg')}}"
           class="img-fluid">
+        </div>
+        <div class="col-md-4">
+          <h2 id="pred">PREDICTED SCORE:  {{results['score_predict']}}/10</h2>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-4">
-          <h3 id="dcolor">DOMINANT COLOR: {{dominant_color}} </h3>
+        <div class="col-md-4">
+          <h3 id="dcolor">DOMINANT COLOR: {{results['dominant_color']}} </h3>
         </div>
-        <div class="col-sm-4">
-          <h2 id="pred">PREDICTED IMDB SCORE:  </h2>
-        </div>
-        <div class="col-sm-4">
-          <h3 id="gcolor">GENERAL COLOR:  </h3>
+        <div class="col-md-4">
+          <h3 id="gcolor">GENERAL COLOR:  {{results['general_color']}}</h3>
         </div>
       </div>
-
-      
+      <div class="row">
+        <div class="col">
+          <hr class="hr-dotted">
+          <h2>Face Detection and Recognition</h2>
+          <p>
+            Our algorithm uses a Convoluted Neural Network (CNN) to identify
+            the faces in a poster. It then compares the face to a database of
+            100 faces, choosing the face with the smallest euclidian distance
+            to the face in the poster.
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-6">
+          <img src="{{url_for('static', filename='images/uploads/processed-face.jpg')}}" class="img-fluid">
+        </div>
+        <div class="col-lg-6">
+          <h3>NUMBER OF FACES:</h3>
+          <p>{{ results['num_faces'] }}</p>
+          <h3>Identified Actors:</h3>
+          <ul>
+            {% for actor in results['identified_actors'] %}
+            <li>{{ actor }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+{% else %}
+<div class="container container-thin">
+  <div class="row">
+    <div class="col">
+      <h1>RESULTS</h1>
+      <p>
+        No image analyzed yet. Go to <a src="{{url_for('upload')}}">Upload Image</a>.
+      </p>
+    </div>
+  </div>
+</div>
+{% endif %}
 {% endblock %}
