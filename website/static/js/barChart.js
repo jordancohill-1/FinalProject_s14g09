@@ -4,7 +4,8 @@
 (function() {
     // Init Data
     let color_data = [];
- 
+    let movie_data = [];
+
     // Fetch color json data
     let promise = d3.json('/load_color_data', (d) => { 
     
@@ -13,9 +14,24 @@
     }).then((d) => {
         
         color_data = d['colors'];
-        //console.log("color_data for barchart:", color_data);
-        // Delegate to createVis
-        createVis();
+
+        // Now, fetch movie json data        
+        let promise = d3.json('/load_movie_data', (d) => { 
+        
+                return d;
+        
+        }).then((d) => {
+            
+            movie_data = d['movies'];
+
+            // Delegate to createVis
+            createVis();
+       
+        }).catch((err) => {
+                 
+          console.error(err);
+                         
+        })
    
     }).catch((err) => {
              
@@ -66,27 +82,33 @@
             .style('transform', `translate(${margin.left}px, ${margin.top}px)`);
 
         //Extract the color names from the entire data set
-        const dataset=[];
+        const dataset = [];
+        const movie_scores = [];
         for (var i = 0; i < color_data.length; i++) { 
             dataset[i] = [color_data[i].dominant_color_name];
+            movie_scores[i] = [movie_data[i].imdb_score]; 
         }
         
         //Extract colors from dataset
         const colorsArray = [];
+        const colorScores = [];
         var color_found = false;
         for (var i = 0; i < dataset.length; i++) {
             color_found = false;
             for (var j=0; j < colorsArray.length; j++) {
                 if (dataset[i][0] == colorsArray[j]) {
                     color_found = true;
+                    colorScores[j] += Number(movie_scores[i]);
                     break;
                 }
             }
             if(color_found == false) {
-                colorsArray[colorsArray.length]= dataset[i][0];
+                colorsArray[colorsArray.length] = dataset[i][0];
+                colorScores[colorScores.length] = Number(movie_scores[i]);
             }
         }
-        
+        console.log(colorsArray);        
+        console.log(colorScores);
 
         //Print the statistics
         printScaledNum('#moviesAnalyzed', dataset.length, "MOVIES ANALYZED");
@@ -110,6 +132,12 @@
             .thresholds(scX.ticks(colorsArray.length));
 
         const bins = histogram(colorMap);
+
+        for (var i = 0; i < colorScores.length; i++) {
+            console.log(bins[i].length);
+            colorScores[i] = Math.round(10*(colorScores[i]/bins[i].length))/10;
+        }
+        console.log(colorScores);
 
         //y Scale
         const scY = d3.scaleLinear()
@@ -152,15 +180,45 @@
                     return 0;
                 }
             })
-            .attr('shape-rendering', 'crispEdges')
-            .on('mouseover', function () {
-                d3.select(this)
-                    .attr('opacity' , 0.8);
-            })
-            .on('mouseout', function () {
-                d3.select(this)
-                    .attr('opacity' , 1.0);
-            });
+            .attr('shape-rendering', 'crispEdges');
+            
+        const scoreText = container.append('text')
+            .text("")
+            .attr('class', 'score_text')
+            .style('font-weight', 'bold')
+            .attr('text-anchor', 'right')
+            .attr('y', 25)
+            .attr('x', 300);
+
+        const avgScore = container.append('text')
+            .text("")
+            .attr('class', 'avg_score_text')
+            .style('font-weight', 'bold')
+            .attr('text-anchor', 'right')
+            .attr('y', 50)
+            .attr('x', 300);
+
+        bars.on('mouseover', function (d, i) {
+            d3.select(this)
+                .attr('opacity' , 0.8);
+
+            d3.select('.score_text')
+                .text("IMDB scores for " + colorsArray[i] + " colored images:");
+
+            d3.select('.avg_score_text')
+                .text("Avg = " + colorScores[i]);
+
+        })
+        .on('mouseout', function () {
+            d3.select(this)
+                .attr('opacity' , 1.0);
+
+            d3.select('.score_text')
+                .text("");
+
+            d3.select('.avg_score_text')
+                .text("");
+        });
 
 
         // Add y-label
@@ -173,23 +231,7 @@
             .attr('x', Math.floor(width / bins.length) / 2)
             .attr('text-anchor', 'middle');
 
-        // Add x-axis
-        /*const xAxis = container.append('g')
-            .attr('transform', `translate(0, ${height + 5})`)
-            .call(d3.axisBottom(scX).ticks(5));
-*/
-
-        // Add x-label
-        /*container.append('text')
-            .attr('transform', `translate(${width/2}, ${height + 45})`)
-            .attr('text-anchor', 'middle')
-            .text('Age');*/
     }
-
-    /*function random_item(items)
-    {  
-        return items[Math.floor(Math.random()*items.length)];
-    }*/
 
     function get_color_index(color, colorArray) {
         for (var i = 0; i<colorArray.length; i++) {
