@@ -1,18 +1,20 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
 from werkzeug.utils import secure_filename
-import processUpload
 from models import db, Movie, Color, Face
 from sqlalchemy import create_engine;
 import os
-
+import pandas as pd
 
 app = Flask(__name__)
 app.secret_key ="s14g09_IMDB_ColorPrediction"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://s14g09:s14g09_Master@movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com:5432/s14g09_IMDB_ColorPrediction"
-app.config['UPLOAD_FOLDER'] = '/Users/jordancohill/Desktop/WebApps/final/UPLOAD_FOLDER'
+app.config['UPLOAD_FOLDER'] = 'UPLOAD_FOLDER'
 app.config['ALLOWED_EXTENSIONS'] = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
 db.init_app(app)
+
+def dataset():
+	return  pd.read_sql(db.session.query(Movie, Color).join(Color).statement, db.session.bind)
 
 @app.route("/")
 def index():
@@ -41,23 +43,29 @@ def allowed_file(filename):
 def upload():
 	if request.method == "POST":
 		if request.files:
+			#processUpload.clearDir()
 
 			image = request.files["image"]
 
 			if image.filename == " ":
-				print("C")
 				return redirect(request.url)
 			if allowed_file(image.filename):
-				print("Z")
 				return redirect(request.url)
 			else:
 				filename = secure_filename(image.filename)
 				image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-				processUpload.quant(filename)
-			return redirect(request.url)
+				results = processUpload.process(filename)
+				session.clear()
+				session['results'] = results
+			return redirect(url_for('results'))
 	return render_template("upload.html")
 
-
+@app.route("/results")
+def results():
+	if session.get('results'):
+		return render_template("results.html", results=session['results'])
+	else:
+		return render_template("results.html")
 
 @app.route('/load_data', methods=['GET'])
 def load_data():
@@ -105,3 +113,6 @@ def load_face_data():
 
 if __name__ == "__main__":
   app.run(debug=True)
+  
+import processUpload
+import trainTest

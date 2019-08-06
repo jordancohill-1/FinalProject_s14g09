@@ -12,6 +12,13 @@ document.addEventListener('swup:clickLink', event => {
   }
 });
 
+// scroll to top of page before replacing content
+document.addEventListener('swup:willReplaceContent', event => {
+  document.body.style.scrollBehavior = "auto";
+  window.scrollTo(0, 0);
+  document.body.style.scrollBehavior = "smooth";
+})
+
 // load d3 scripts when trends page is loaded
 // set cache to true in production
 document.addEventListener('swup:contentReplaced', function () {

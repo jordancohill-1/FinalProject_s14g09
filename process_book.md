@@ -206,3 +206,13 @@ Lastly, the output from the dominant colors process was loaded to the Colors
 table by repeating the psycopg2 steps above and then using Pandas read_csv.
 Linking these tables is still in process but will be done by adding a foreign 
 key to the Colors table that references the unique ID from the movies table.
+
+An AWS RDS instance was created to host our sites data.
+
+####Upload
+
+Two scripts were written in order to take in a users movie poster and predict 
+it's IMDB score. processUpload.py handled resizing, quantizing and identify the 
+images dominant color. testTrain.py utilized SkLearn's test_train_split to
+create a test and train algorithm and predict the movie's IMDB score.
+

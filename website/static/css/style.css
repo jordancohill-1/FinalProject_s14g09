@@ -13,12 +13,18 @@
 
 /* Body */
 
+.teal h3{
+  color: #4FD1C5;
+}
+
+
 body {
   background-color: var(--white);
   color: var(--dark);
   font-family: var(--font-family-sans-serif);
   font-weight: 500;
 }
+
 
 /* Angles */
 
@@ -72,6 +78,14 @@ body {
   padding-top: 10px;
 }
 
+.container-wide {
+  max-width: 1440px !important;
+}
+
+.container-thin {
+  max-width: 960px !important;
+}
+
 /* Text */
 
 h1,
@@ -85,7 +99,7 @@ h6 {
 }
 
 h1 {
-  font-size: 6rem;
+  font-size: 3rem;
 }
 
 h2 {
@@ -93,7 +107,8 @@ h2 {
 }
 
 p,
-span {
+span,
+li {
   font-size: 1.2rem;
 }
 
@@ -150,6 +165,10 @@ span {
   width: 100%;
   text-align: center;
   clip-path: polygon(100% 0, 100% 80%, 0 100%, 0 20%);;
+}
+
+.hero-title {
+  font-size: 6rem;
 }
 
 .hero-subtitle {
