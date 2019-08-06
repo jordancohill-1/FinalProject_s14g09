@@ -12,8 +12,8 @@ import glob
 import webcolors
 import json
 
-path = '../UPLOAD_FOLDER'
-colorRange = json.load(open('../colorRange.json'))
+path = 'UPLOAD_FOLDER'
+colorRange = json.load(open('colorRange.json'))
 
 def quant(img):
 	pathToFile = os.path.join(path, img)

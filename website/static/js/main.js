@@ -1,3 +1,4 @@
+// intialize swup
 const swup = new Swup();
 
 // find navbar toggler and menu
@@ -21,5 +22,8 @@ document.addEventListener('swup:contentReplaced', function () {
       $.getScript({url: '/static/js/facesChart.js', cache: false});
       $.getScript({url: '/static/js/scatterChart.js', cache: false});
     });
+  }
+  if (window.location.pathname == '/') {
+    init()
   }
 });

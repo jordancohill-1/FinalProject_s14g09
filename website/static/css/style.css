@@ -7,6 +7,8 @@
   --teal: #4FD1C5 !important;
   --primary: #4FD1C5 !important;
   --font-family-sans-serif: 'Barlow Semi Condensed', sans-serif;
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-2: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 /* Body */
@@ -130,6 +132,10 @@ span {
   width: 100%;
 }
 
+.hero-container-secondary {
+  margin-top: -20vh;
+}
+
 .hero {
   position: relative;
   display: flex;
@@ -183,6 +189,12 @@ span {
 .navbar-dark .navbar-nav .nav-link:focus,
 .navbar-dark .navbar-nav .nav-link:hover {
   color: rgba(255, 255, 255, 1);
+}
+
+/* Modal */
+
+.modal {
+  padding-top: calc(98px + 10px);
 }
 
 /* Hover.css - https://github.com/IanLunn/Hover */
