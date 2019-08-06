@@ -107,8 +107,6 @@
                 colorScores[colorScores.length] = Number(movie_scores[i]);
             }
         }
-        console.log(colorsArray);        
-        console.log(colorScores);
 
         //Print the statistics
         printScaledNum('#moviesAnalyzed', dataset.length, "MOVIES ANALYZED");
@@ -134,10 +132,8 @@
         const bins = histogram(colorMap);
 
         for (var i = 0; i < colorScores.length; i++) {
-            console.log(bins[i].length);
             colorScores[i] = Math.round(10*(colorScores[i]/bins[i].length))/10;
         }
-        console.log(colorScores);
 
         //y Scale
         const scY = d3.scaleLinear()
