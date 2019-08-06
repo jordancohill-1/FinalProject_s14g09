@@ -13,12 +13,18 @@
 
 /* Body */
 
+.teal h3{
+  color: #4FD1C5;
+}
+
+
 body {
   background-color: var(--white);
   color: var(--dark);
   font-family: var(--font-family-sans-serif);
   font-weight: 500;
 }
+
 
 /* Angles */
 

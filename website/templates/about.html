@@ -4,11 +4,31 @@
 <div class="container container-thin">
   <div class="row">
     <div class="col">
-      <h2>ABOUT</h2>
-        <p>
-          IMDBvis uses machine learning and D3.js to present movie trends in a
-          visual manner.
-        </p>
+  
+
+          <h2>Here's how we did it!</h2>
+          <div>	
+          <h3>Poster Scraping</h3>
+          <p> With help from the following repository, https://github.com/sundeepblue/movie_rating_prediction, about 5000 posters with corresponding movie data were scraped from a list of movie titles at www.the-numbers.com
+          </p>
+
+          <h3>Quantization and Dominant Colors</h3>
+         <p>
+          Using Python's OpenCV library, movie posters were quantized into 4 clusters.
+          From there, the quantized images were explored with the ColorThief library 
+          to identify the dominant colors.
+      	</p>
+          <h3>Train Test</h3>
+          <p>
+           Once the dominant colors were identified, a train test algorithm was created with the
+           SKLearn library to predict a movie's IMDB rating from the dominant colors in it's poster.
+       	</p>
+       	<
+
+       </div>
+
+
+        
     </div>
   </div>
 </div>
