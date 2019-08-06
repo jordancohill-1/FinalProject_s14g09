@@ -3,6 +3,7 @@ from sklearn.cluster import MiniBatchKMeans
 from pathlib import Path
 from colorthief import ColorThief
 import numpy as np
+import trainTest
 import pandas as pd
 import argparse
 import cv2
@@ -16,14 +17,17 @@ colorRange = json.load(open('../colorRange.json'))
 
 def quant(img):
 	pathToFile = os.path.join(path, img)
+	origPath = os.path.join(path, "original.jpg")
+	newPath = os.path.join(path, "quant.jpg")
 
 	#QUANT
 	image = cv2.imread(pathToFile)
-	scale_percent = 50 
+	scale_percent = 40 
 	width = int(image.shape[1] * scale_percent / 100)
 	height = int(image.shape[0] * scale_percent / 100)
 	dim = (width, height)
 	image = cv2.resize(image, dim, interpolation = cv2.INTER_AREA)
+	originalImage = image
 	(h, w) = image.shape[:2]
 	image = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
 	image = image.reshape((image.shape[0] * image.shape[1], 3))
@@ -33,7 +37,8 @@ def quant(img):
 	quant = quant.reshape((h, w, 3))
 	quant = cv2.cvtColor(quant, cv2.COLOR_LAB2BGR)
 
-	cv2.imwrite( pathToFile, quant)
+	cv2.imwrite( origPath, originalImage)
+	cv2.imwrite( newPath, quant)
 	dominantColors(pathToFile)
 
 def dominantColors(path):
@@ -78,7 +83,16 @@ def dominantColors(path):
 	general_name = get_general_name(colorName)
 
 	print(exactName, general_name)
-	return[exactName, general_name]
+	trainTest.predict(general_name)
+	return general_name
+
+def clearDir():
+	files = os.listdir(path)
+	for f in files:
+		os.remove(path +"/" + f)
+	
+
+
 
 
 

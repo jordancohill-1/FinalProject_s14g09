@@ -1,0 +1,41 @@
+{% extends "layouts/default.html" %}
+{% block content %}
+
+    <div class="container">
+      <div class="row">
+        <div class="col">
+          <h2>UPLOAD RESULTS</h2>
+          <p>
+            
+          </p>
+        </div>
+      </div>
+     <div class="row">
+        <div class="col-sm-4">
+          <h3>ORIGINAL</h3>
+          <img src="../../original.jpg"
+          class="img-fluid">
+        </div>
+        <div class="col-sm-4">
+          <span>&#8594;</span>
+        </div>
+        <div class="col-sm-4">
+          <h3>QUANTIZED</h3>
+          <img src="../../quant.jpg"
+          class="img-fluid">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          <h3 id="dcolor">DOMINANT COLOR: {{dominant_color}} </h3>
+        </div>
+        <div class="col-sm-4">
+          <h2 id="pred">PREDICTED IMDB SCORE:  </h2>
+        </div>
+        <div class="col-sm-4">
+          <h3 id="gcolor">GENERAL COLOR:  </h3>
+        </div>
+      </div>
+
+      
+{% endblock %}
