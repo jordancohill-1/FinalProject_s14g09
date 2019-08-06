@@ -11,7 +11,7 @@ app = Flask(__name__)
 app.secret_key ="s14g09_IMDB_ColorPrediction"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://s14g09:s14g09_Master@movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com:5432/s14g09_IMDB_ColorPrediction"
-app.config['UPLOAD_FOLDER'] = '/Users/jordancohill/Desktop/WebApps/final/UPLOAD_FOLDER'
+app.config['UPLOAD_FOLDER'] = '../UPLOAD_FOLDER'
 app.config['ALLOWED_EXTENSIONS'] = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
 db.init_app(app)
 
@@ -45,7 +45,7 @@ def allowed_file(filename):
 def upload():
 	if request.method == "POST":
 		if request.files:
-			processUpload.clearDir()
+			#processUpload.clearDir()
 
 			image = request.files["image"]
 
@@ -57,6 +57,7 @@ def upload():
 				filename = secure_filename(image.filename)
 				image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 				processUpload.quant(filename)
+				print(x)
 				
 			return redirect(url_for('upload'))
 	return render_template("upload.html")
