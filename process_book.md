@@ -219,3 +219,17 @@ predict the movie's IMDB score.
 
 The user is then redirected to a results page, giving the user information about
 the poster.
+
+#### Creating Visualizations (Samer Maaliki)
+
+Four visualizatiosn were developed to showcase teh results of this project.  
+The first is a combination of the numbers of files that were analyzed, the 
+number of colors that were extracted from the files and a barchart that shows 
+the number of files that had the color as a dominant color.  The next chart 
+shows the relationship between the dominant color in an image and the IMDB score.
+The third plot shows the effects of the number of faces in a poster on the 
+IMDB score.  The final one is a scatterplot that combines all the data.  
+It shows the effects of number of faces and the dominant color on the IMDB score. 
+
+
+
