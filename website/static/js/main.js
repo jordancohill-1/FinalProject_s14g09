@@ -24,13 +24,28 @@ document.addEventListener('swup:willReplaceContent', event => {
 document.addEventListener('swup:contentReplaced', function () {
   if (window.location.pathname == '/trends') {
     $.getScript({url: 'https://d3js.org/d3.v5.min.js', cache: false}, function () {
-      $.getScript({url: '/static/js/barChart.js', cache: false});
-      $.getScript({url: '/static/js/moviePlot.js', cache: false});
       $.getScript({url: '/static/js/facesChart.js', cache: false});
       $.getScript({url: '/static/js/scatterChart.js', cache: false});
+      $.getScript({url: '/static/js/chartsMaster.js', cache: false});
     });
   }
   if (window.location.pathname == '/') {
     init()
   }
 });
+
+if (window.location.pathname == '/upload') {
+  var input = document.getElementById( 'poster' );
+  var infoArea = document.getElementById( 'posterLabel' );
+
+  input.addEventListener( 'change', showFileName );
+
+  function showFileName( event ) {
+  
+    var input = event.srcElement;
+
+    var fileName = input.files[0].name;
+
+    infoArea.textContent = fileName;
+  }
+}
