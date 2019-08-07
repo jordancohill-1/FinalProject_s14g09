@@ -32,20 +32,19 @@ document.addEventListener('swup:contentReplaced', function () {
   if (window.location.pathname == '/') {
     init()
   }
-});
-
-if (window.location.pathname == '/upload') {
-  var input = document.getElementById( 'poster' );
-  var infoArea = document.getElementById( 'posterLabel' );
-
-  input.addEventListener( 'change', showFileName );
-
-  function showFileName( event ) {
+  if (window.location.pathname == '/upload') {
+    var input = document.getElementById( 'poster' );
+    var infoArea = document.getElementById( 'posterLabel' );
   
-    var input = event.srcElement;
-
-    var fileName = input.files[0].name;
-
-    infoArea.textContent = fileName;
+    input.addEventListener( 'change', showFileName );
+  
+    function showFileName( event ) {
+    
+      var input = event.srcElement;
+  
+      var fileName = input.files[0].name;
+  
+      infoArea.textContent = fileName;
+    }
   }
-}
+});
