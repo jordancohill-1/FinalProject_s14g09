@@ -4,6 +4,7 @@ from models import db, Movie, Color, Face
 from sqlalchemy import create_engine;
 import os, random
 import pandas as pd
+from flask_cors import CORS, cross_origin
 #import processUpload
 #import trainTest
 
@@ -14,6 +15,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgres://s14g09:s14g09_Master@movie.c
 app.config['UPLOAD_FOLDER'] = 'UPLOAD_FOLDER'
 app.config['ALLOWED_EXTENSIONS'] = ['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif']
 db.init_app(app)
+
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 
 def dataset():
 	return  pd.read_sql(db.session.query(Movie, Color).join(Color).statement, db.session.bind)
@@ -27,6 +31,7 @@ def about():
   return render_template("about.html")
 
 @app.route("/trends")
+@cross_origin()
 def trends():
 	images=[]
 	path="static/images/randoms"
