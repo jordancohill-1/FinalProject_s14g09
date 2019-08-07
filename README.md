@@ -1,7 +1,10 @@
 # FinalProject_s14g09
 
+Screencast: https://streamable.com/w5gfa
+Website: https://imdbvis.herokuapp.com/
+
 ## Our Project:
-VIS IMDB
+IMDBvis
 
 ## Team Members:
 - Jordan Cohill
