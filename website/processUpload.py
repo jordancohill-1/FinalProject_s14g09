@@ -95,7 +95,7 @@ def face(img, pathToFile, file_hash, current_time):
 	num_faces = len(face_locations)
 
 	# create face encodings of each found faces
-	face_encodings = face_recognition.face_encodings(image, face_locations)
+	face_encodings = face_recognition.face_encodings(image, face_locations, num_jitters=50)
 
 	# set up identified actors array
 	identified_actors = []
