@@ -1,5 +1,5 @@
 Click==7.0
-cmake==3.14.4
+cmake==3.13.3
 colorthief==0.2.1
 dlib==19.17.0
 face-recognition==1.2.3
