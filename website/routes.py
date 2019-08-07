@@ -4,8 +4,8 @@ from models import db, Movie, Color, Face
 from sqlalchemy import create_engine;
 import os, random
 import pandas as pd
-import processUpload
-import trainTest
+#import processUpload
+#import trainTest
 
 app = Flask(__name__)
 app.secret_key ="s14g09_IMDB_ColorPrediction"
