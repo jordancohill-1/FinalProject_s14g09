@@ -209,10 +209,13 @@ key to the Colors table that references the unique ID from the movies table.
 
 An AWS RDS instance was created to host our sites data.
 
-####Upload
+#### Upload (Jordan Cohill, Phillip Tran)
 
 Two scripts were written in order to take in a users movie poster and predict 
-it's IMDB score. processUpload.py handled resizing, quantizing and identify the 
-images dominant color. testTrain.py utilized SkLearn's test_train_split to
-create a test and train algorithm and predict the movie's IMDB score.
+it's IMDB score. processUpload.py handled resizing, quantizing identifying the 
+images dominant color, finding faces, and identifying actors. testTrain.py
+utilized SkLearn's test_train_split to create a test and train algorithm and
+predict the movie's IMDB score.
 
+The user is then redirected to a results page, giving the user information about
+the poster.

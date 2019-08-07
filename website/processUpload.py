@@ -15,6 +15,9 @@ import face_recognition
 import imutils
 from PIL import Image, ImageDraw, ImageFont
 import psycopg2
+import hashlib
+import sys
+import time
 
 upload_path = 'UPLOAD_FOLDER'
 path = 'static/images/uploads'
@@ -24,8 +27,15 @@ def process(img):
 	# path to uploaded image
 	pathToFile = os.path.join(upload_path, img)
 
-	quant_results = quant(img, pathToFile)
-	face_results = face(img, pathToFile)
+	# get hash of file
+	file_hash = hashlib.sha1(open(pathToFile, 'rb').read()).hexdigest()
+ 
+	# get current unix time
+	current_time = int(time.time())
+
+	# get quant and face results
+	quant_results = quant(img, pathToFile, file_hash, current_time)
+	face_results = face(img, pathToFile, file_hash, current_time)
 
 	# merge dicts
 	quant_results.update(face_results)
@@ -35,7 +45,7 @@ def process(img):
 
 	return results
 
-def face(img, pathToFile):
+def face(img, pathToFile, file_hash, current_time):
 	# connection to database
 	conn = psycopg2.connect(database='s14g09_IMDB_ColorPrediction', user='s14g09', password="s14g09_Master", host='movie.cdnh3cwt5np2.us-east-1.rds.amazonaws.com', port='5432')
 
@@ -66,8 +76,9 @@ def face(img, pathToFile):
 		# add to known face encodings array
 		known_face_encodings.append(face_encoding)
 
-		origPath = os.path.join(path, "original-face.jpg")
-		newPath = os.path.join(path, "processed-face.jpg")
+	# set image paths
+	origPath = os.path.join(path, f'og-fc-{file_hash}-{current_time}.jpg')
+	newPath = os.path.join(path, f'pr-fc-{file_hash}-{current_time}.jpg')
 
 	#scale down image for processing
 	image = cv2.imread(pathToFile, 0)
@@ -84,7 +95,7 @@ def face(img, pathToFile):
 	num_faces = len(face_locations)
 
 	# create face encodings of each found faces
-	face_encodings = face_recognition.face_encodings(image, face_locations)
+	face_encodings = face_recognition.face_encodings(image, face_locations, num_jitters=50)
 
 	# set up identified actors array
 	identified_actors = []
@@ -148,12 +159,13 @@ def face(img, pathToFile):
 	pil_image.save(newPath)
 
 	# return results in a dict
-	results = {'num_faces': num_faces, 'identified_actors': identified_actors}
+	results = {'num_faces': num_faces, 'identified_actors': identified_actors,
+            'face_file': newPath.replace('static/', '')}
 	return results
 
-def quant(img, pathToFile):
-	origPath = os.path.join(path, "original.jpg")
-	newPath = os.path.join(path, "quant.jpg")
+def quant(img, pathToFile, file_hash, current_time):
+	origPath = os.path.join(path, f'og-{file_hash}-{current_time}.jpg')
+	newPath = os.path.join(path, f'qt-{file_hash}-{current_time}.jpg')
 
 	#QUANT
 	image = cv2.imread(pathToFile)
@@ -175,6 +187,8 @@ def quant(img, pathToFile):
 	cv2.imwrite( origPath, originalImage)
 	cv2.imwrite( newPath, quant)
 	results = dominantColors(pathToFile)
+	results.update({'og_file': origPath.replace('static/', ''),
+                 'quant_file': newPath.replace('static/', '')})
 
 	return results
 

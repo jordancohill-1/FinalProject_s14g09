@@ -1,8 +1,12 @@
 Click==7.0
 colorthief==0.2.1
+dlib==19.17.0
+face-recognition==1.2.3
+face-recognition-models==0.3.0
 Flask==1.1.1
 Flask-SQLAlchemy==2.4.0
 gunicorn==19.9.0
+imutils==0.5.2
 itsdangerous==1.1.0
 Jinja2==2.10.1
 joblib==0.13.2
