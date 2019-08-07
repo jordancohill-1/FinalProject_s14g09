@@ -227,3 +227,5 @@ def clearDir():
 	files = os.listdir(path)
 	for f in files:
 		os.remove(path +"/" + f)
+
+
