@@ -6,25 +6,33 @@
     <div class="col">
   
 
-          <h2>Here's how we did it!</h2>
+          <h1>HERE'S HOW WE DID IT!</h1>
           <div>	
-          <h3>Poster Scraping</h3>
-          <p> With help from the following repository, https://github.com/sundeepblue/movie_rating_prediction, about 5000 posters with corresponding movie data were scraped from a list of movie titles at www.the-numbers.com
+          <h2>POSTER SCRAPING</h2>
+          <p> With help from the following repository,
+            <a href='https://github.com/sundeepblue/movie_rating_prediction'>movie_rating_prediction</a>,
+            about 5000 posters with corresponding movie data were scraped from a list of movie titles
+            at <a href='www.the-numbers.com'>The Numbers</a>.
           </p>
 
-          <h3>Quantization and Dominant Colors</h3>
+          <h2>QUANTIZATION AND DOMINANT COLORS</h2>
          <p>
           Using Python's OpenCV library, movie posters were quantized into 4 clusters.
           From there, the quantized images were explored with the ColorThief library 
           to identify the dominant colors.
       	</p>
-          <h3>Train Test</h3>
+          <h2>TRAIN TEST</h2>
           <p>
            Once the dominant colors were identified, a train test algorithm was created with the
            SKLearn library to predict a movie's IMDB rating from the dominant colors in it's poster.
-       	</p>
-       	<
-
+         </p>
+          <h2>FACIAL DETECTION AND RECOGNITION</h2>
+          <p>As an added bonus we used the
+            <a href="https://github.com/ageitgey/face_recognition">facial_recognition</a> library to find
+            and identify faces. A pre-trained Convolutional Neural Network (CNN) identifies
+            faces in the poster. These faces are then compared to the faces of 100 actors, stored in
+            the database. If we found possible matches, each face would be compared to the face in
+            the poster and the one with the smallest euclidian distance would be chosen.</p>
        </div>
 
 

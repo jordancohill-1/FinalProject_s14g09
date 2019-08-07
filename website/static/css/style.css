@@ -216,6 +216,30 @@ li {
   padding-top: calc(98px + 10px);
 }
 
+/* Quant Arrow */
+
+.quant-arrow {
+  width: 90%;
+  height: auto;
+  padding: 0 0 0 10px;
+  margin-left: 0.5vw;
+}
+
+@media (max-width: 768px) {
+  .quant-arrow {
+    width: auto;
+    height: 150px;
+    padding: 20px 0;
+    transform: rotate(90deg);
+  }
+}
+
+/* Results */
+
+.results {
+  font-size: 1.4rem;
+}
+
 /* Hover.css - https://github.com/IanLunn/Hover */
 
 .hvr-underline-from-left {
