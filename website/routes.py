@@ -2,7 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from werkzeug.utils import secure_filename
 from models import db, Movie, Color, Face
 from sqlalchemy import create_engine;
-import os
+import os, random
 import pandas as pd
 
 app = Flask(__name__)
@@ -26,7 +26,17 @@ def about():
 
 @app.route("/trends")
 def trends():
-  return render_template("trends.html")
+	images=[]
+	path="static/images/randoms"
+	for i in range(0,3):
+		randFile = random.choice([x for x in os.listdir(path)
+	    	if os.path.isfile(os.path.join(path, x))])
+		images.append(randFile)
+	imgOne =  path + "/" +images[0]
+	imgTwo =  path + "/" +images[1]
+	imgThree =  path + "/" +images[2]
+	print(imgOne)
+	return render_template("trends.html", imgOne=imgOne, imgTwo=imgTwo, imgThree=imgThree)
 
 def allowed_file(filename):
 	if not '.' in filename :
