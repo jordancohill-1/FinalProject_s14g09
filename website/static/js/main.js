@@ -23,10 +23,10 @@ document.addEventListener('swup:willReplaceContent', event => {
 // set cache to true in production
 document.addEventListener('swup:contentReplaced', function () {
   if (window.location.pathname == '/trends') {
-    $.getScript({url: 'https://d3js.org/d3.v5.min.js', cache: false}, function () {
-      $.getScript({url: '/static/js/facesChart.js', cache: false});
-      $.getScript({url: '/static/js/scatterChart.js', cache: false});
-      $.getScript({url: '/static/js/chartsMaster.js', cache: false});
+    $.getScript({url: 'https://d3js.org/d3.v5.min.js', cache: true}, function () {
+      $.getScript({url: '/static/js/facesChart.js', cache: true});
+      $.getScript({url: '/static/js/scatterChart.js', cache: true});
+      $.getScript({url: '/static/js/chartsMaster.js', cache: true});
     });
   }
   if (window.location.pathname == '/') {
